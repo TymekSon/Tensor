@@ -1,0 +1,3 @@
+C:/cpp/Tensor/cmake-build-debug/CMakeFiles/Tensor.dir
+C:/cpp/Tensor/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/cpp/Tensor/cmake-build-debug/CMakeFiles/rebuild_cache.dir
