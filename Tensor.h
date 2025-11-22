@@ -13,7 +13,8 @@
 #ifndef TENSOR_H
 #define TENSOR_H
 
-
+enum class ActivationType { Identity, ReLU, LReLU, Sigmoid, Tanh, Softmax };
+enum class PoolingType { MaxPool, AvgPool };
 
 class Tensor {
 public:
@@ -31,12 +32,21 @@ public:
     const float& operator[](size_t index) const;
 
     void set_grad(Tensor* grad);
-    Tensor* grad() { return grad_; }
+    Tensor* grad() const { return grad_; }
     bool req_grad() const { return req_grad_; }
 
     static Tensor add(Arena& arena, Tensor& a, Tensor& b);
     static Tensor sub(Arena& arena, Tensor& a, Tensor& b);
+
+    Tensor activate(Arena &arena, ActivationType type) const;
+    Tensor activate_derivative(Arena &arena, ActivationType type) const;
+
+    static Tensor conv2d(Arena &arena, const Tensor &image, const Tensor &kernel, int stride);
+    static Tensor maxpool2d(Arena &arena, Tensor &image, int kernel_size, int stride, PoolingType type);
+
+    Tensor transpose(Arena &arena) const;
     static Tensor matmul(Arena& arena, Tensor& a, Tensor& b);
+    static Tensor element_wise(Arena &arena, Tensor& a, Tensor& b);
 
     void print(const std::string& name) const;
 

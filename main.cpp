@@ -29,6 +29,14 @@ int main() {
     Tensor F = Tensor::matmul(arena, A, C);
     F.print("A*C");
 
+    // Test conv2d
+    Tensor image(&arena, {9,9});
+    Tensor kernel(&arena, {3,3});
+    image.fill(1.0f);
+    kernel.fill(2.0f);
+
+    Tensor out = Tensor::conv2d(arena, image, kernel, 1);
+
     // Dodatkowy test czy arena się nie przepełnia
     std::cout << "Arena used: " << arena.used() << " / " << arena.capacity() << std::endl;
 

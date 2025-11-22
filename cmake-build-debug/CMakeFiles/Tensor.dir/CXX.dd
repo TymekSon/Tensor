@@ -1,0 +1,7 @@
+ninja_dyndep_version = 1.0
+build CMakeFiles/Tensor.dir/main.cpp.obj: dyndep
+
+build CMakeFiles/Tensor.dir/Tensor.cpp.obj: dyndep
+
+build CMakeFiles/Tensor.dir/Arena.cpp.obj: dyndep
+

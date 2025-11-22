@@ -98,6 +98,85 @@ Tensor Tensor::matmul(Arena &arena, Tensor &a, Tensor &b) {
     return out;
 }
 
+Tensor Tensor::element_wise(Arena &arena, Tensor &a, Tensor &b) {
+    Tensor out(&arena, a.shape_);
+    if (a.numel_ != b.numel_) {
+        throw std::invalid_argument("Element_wise: Tensor add not equal Tensor size");
+    }
+    for (size_t i = 0; i < a.numel_; ++i) {
+        a.data_[i] = a.data_[i] * b.data_[i];
+    }
+    return out;
+}
+
+Tensor Tensor::conv2d(Arena &arena, const Tensor &image, const Tensor &kernel, int stride) {
+    int H = image.shape_[0];
+    int W = image.shape_[1];
+
+    int KH = kernel.shape_[0];
+    int KW = kernel.shape_[1];
+
+    unsigned long long OH = H - KH + 1;
+    unsigned long long OW = W - KW + 1;
+
+    Tensor out(&arena, {OH, OW});
+    Tensor patch(&arena, kernel.shape_);
+
+    for (size_t i = 0; i < OH; i++) {
+        for (size_t j = 0; j < OW; j++) {
+            float sum = 0.0f;
+            for (size_t k = 0; k < KH; ++k) {
+                for (size_t l = 0; l < KW; ++l) {
+                    sum += image.data_[(i + k)*W + (j + l)] * kernel.data_[k*KW + l];
+                }
+            }
+            out.data_[i*OW + j] = sum;
+        }
+    }
+    return out;
+}
+
+Tensor Tensor::maxpool2d(Arena &arena, Tensor &image, int kernel_size, int stride, PoolingType type){
+    int H = image.shape_[0];
+    int W = image.shape_[1];
+
+    unsigned long long OH = H - kernel_size + 1;
+    unsigned long long OW = W - kernel_size + 1;
+
+    Tensor out(&arena, {OH, OW});
+
+    if (type == PoolingType::AvgPool) {
+        for (int i = 0; i < OH; ++i) {
+            for (int j = 0; j < OW; ++j) {
+                float sum = 0.0f;
+                for (int k = 0; k < kernel_size; ++k) {
+                    for (int l = 0; l < kernel_size; ++l) {
+                        sum += image.data_[(i+k)*OH + j+l];
+                    }
+                }
+                out.data_[i] = sum/(kernel_size*kernel_size);
+            }
+        }
+    }
+
+    if (type == PoolingType::MaxPool) {
+        for (int i = 0; i < OH; ++i) {
+            for (int j = 0; j < OW; ++j) {
+                float max = image.data_[i*OH + j];
+                for (int k = 0; k < kernel_size; ++k) {
+                    for (int l = 0; l < kernel_size; ++l) {
+                        if (max > image.data_[(i+k)*OH + j+l]) {
+                            max = image.data_[(i+k)*OH + j+l];
+                        }
+                    }
+                }
+                out.data_[i] = max;
+            }
+        }
+    }
+    return out;
+}
+
 void Tensor::print(const std::string& name="") const {
     if (!name.empty()) std::cout << name << " = ";
     std::cout << "[";

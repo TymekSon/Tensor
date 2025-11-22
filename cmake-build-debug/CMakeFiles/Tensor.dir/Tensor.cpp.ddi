@@ -1,0 +1,11 @@
+{
+"rules": [
+{
+"primary-output": "CMakeFiles/Tensor.dir/Tensor.cpp.o",
+"requires": [
+]
+}
+],
+"version": 0,
+"revision": 0
+}
