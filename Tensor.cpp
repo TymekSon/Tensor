@@ -17,10 +17,7 @@ Tensor::Tensor(Arena *arena, const std::vector<size_t> &shape, bool req_grad) : 
     data_ = arena->allocate(numel_);
 }
 
-Tensor::~Tensor() {
-    delete[] data_;
-    delete[] grad_;
-}
+Tensor::~Tensor() {}
 
 void Tensor::zero() {
     std::fill(data_, data_ + numel_, 0.0f);
@@ -110,69 +107,56 @@ Tensor Tensor::element_wise(Arena &arena, Tensor &a, Tensor &b) {
 }
 
 Tensor Tensor::conv2d(Arena &arena, const Tensor &image, const Tensor &kernel, int stride) {
-    int H = image.shape_[0];
-    int W = image.shape_[1];
+    size_t H = image.shape_[0];
+    size_t W = image.shape_[1];
+    size_t KH = kernel.shape_[0];
+    size_t KW = kernel.shape_[1];
 
-    int KH = kernel.shape_[0];
-    int KW = kernel.shape_[1];
+    if (H < KH || W < KW) {
+        // Obsłuż błąd, np. throw exception
+        throw std::invalid_argument("Kernel larger than image");
+    }
 
-    unsigned long long OH = H - KH + 1;
-    unsigned long long OW = W - KW + 1;
+    size_t OH = (H - KH) / stride + 1;
+    size_t OW = (W - KW) / stride + 1;
 
     Tensor out(&arena, {OH, OW});
-    Tensor patch(&arena, kernel.shape_);
 
-    for (size_t i = 0; i < OH; i++) {
-        for (size_t j = 0; j < OW; j++) {
+    for (size_t i = 0; i < OH; ++i) {
+        for (size_t j = 0; j < OW; ++j) {
             float sum = 0.0f;
             for (size_t k = 0; k < KH; ++k) {
                 for (size_t l = 0; l < KW; ++l) {
-                    sum += image.data_[(i + k)*W + (j + l)] * kernel.data_[k*KW + l];
+                    size_t img_row = i * stride + k;
+                    size_t img_col = j * stride + l;
+                    sum += image.data_[img_row * W + img_col] * kernel.data_[k * KW + l];
                 }
             }
-            out.data_[i*OW + j] = sum;
+            out.data_[i * OW + j] = sum;
         }
     }
     return out;
 }
 
-Tensor Tensor::maxpool2d(Arena &arena, Tensor &image, int kernel_size, int stride, PoolingType type){
+Tensor Tensor::maxpool2d(Arena &arena, Tensor &image, int kernel_size, PoolingType type){
     int H = image.shape_[0];
     int W = image.shape_[1];
 
-    unsigned long long OH = H - kernel_size + 1;
-    unsigned long long OW = W - kernel_size + 1;
+    unsigned long long OH = H / kernel_size;
+    unsigned long long OW = W / kernel_size;
 
     Tensor out(&arena, {OH, OW});
 
     if (type == PoolingType::AvgPool) {
-        for (int i = 0; i < OH; ++i) {
-            for (int j = 0; j < OW; ++j) {
-                float sum = 0.0f;
-                for (int k = 0; k < kernel_size; ++k) {
-                    for (int l = 0; l < kernel_size; ++l) {
-                        sum += image.data_[(i+k)*OH + j+l];
-                    }
-                }
-                out.data_[i] = sum/(kernel_size*kernel_size);
+        for (size_t i = 0; i < OH; ++i) {
+            for (size_t j = 0; j < OW; ++j) {
+                
             }
         }
     }
 
     if (type == PoolingType::MaxPool) {
-        for (int i = 0; i < OH; ++i) {
-            for (int j = 0; j < OW; ++j) {
-                float max = image.data_[i*OH + j];
-                for (int k = 0; k < kernel_size; ++k) {
-                    for (int l = 0; l < kernel_size; ++l) {
-                        if (max > image.data_[(i+k)*OH + j+l]) {
-                            max = image.data_[(i+k)*OH + j+l];
-                        }
-                    }
-                }
-                out.data_[i] = max;
-            }
-        }
+
     }
     return out;
 }

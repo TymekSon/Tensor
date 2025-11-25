@@ -3,7 +3,7 @@
 #include "Arena.h"
 
 int main() {
-    Arena arena(1024*10);
+    Arena arena(1024*60);
 
     Tensor A(&arena, {2,3});
     Tensor B(&arena, {2,3});
@@ -35,7 +35,13 @@ int main() {
     image.fill(1.0f);
     kernel.fill(2.0f);
 
+    image.print("Img");
+
     Tensor out = Tensor::conv2d(arena, image, kernel, 1);
+    out.print("out");
+
+    Tensor pooled = Tensor::maxpool2d(arena, image, 2, 2, PoolingType::MaxPool);
+    pooled.print("pooled");
 
     // Dodatkowy test czy arena się nie przepełnia
     std::cout << "Arena used: " << arena.used() << " / " << arena.capacity() << std::endl;

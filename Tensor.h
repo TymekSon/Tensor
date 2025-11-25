@@ -42,7 +42,7 @@ public:
     Tensor activate_derivative(Arena &arena, ActivationType type) const;
 
     static Tensor conv2d(Arena &arena, const Tensor &image, const Tensor &kernel, int stride);
-    static Tensor maxpool2d(Arena &arena, Tensor &image, int kernel_size, int stride, PoolingType type);
+    static Tensor maxpool2d(Arena &arena, Tensor &image, int kernel_size, PoolingType type);
 
     Tensor transpose(Arena &arena) const;
     static Tensor matmul(Arena& arena, Tensor& a, Tensor& b);
