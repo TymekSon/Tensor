@@ -85,3 +85,13 @@
 239	276	7864955447943473	CMakeFiles/Tensor.dir/Arena.cpp.obj.modmap	8eab7adae26ff51f
 277	1042	7864955448331303	CMakeFiles/Tensor.dir/main.cpp.obj	6f7933e460d6d0ab
 1042	1148	7864955455977740	Tensor.exe	83d35dfe66b38eb1
+27	211	7864987786321406	CMakeFiles/Tensor.dir/main.cpp.obj.ddi	3c8eaaf4ece67659
+32	221	7864987786366555	CMakeFiles/Tensor.dir/Tensor.cpp.obj.ddi	f07289169f89f4eb
+221	251	7864987788250344	CMakeFiles/Tensor.dir/CXX.dd	8eab7adae26ff51f
+221	251	7864987788250344	C:/cpp/Tensor/cmake-build-debug/CMakeFiles/Tensor.dir/CXXModules.json	8eab7adae26ff51f
+221	251	7864987788250344	CMakeFiles/Tensor.dir/main.cpp.obj.modmap	8eab7adae26ff51f
+221	251	7864987788250344	CMakeFiles/Tensor.dir/Tensor.cpp.obj.modmap	8eab7adae26ff51f
+221	251	7864987788250344	CMakeFiles/Tensor.dir/Arena.cpp.obj.modmap	8eab7adae26ff51f
+253	920	7864987788572805	CMakeFiles/Tensor.dir/main.cpp.obj	6f7933e460d6d0ab
+256	1086	7864987788619617	CMakeFiles/Tensor.dir/Tensor.cpp.obj	fe59f769a0d51356
+1087	1192	7864987796915750	Tensor.exe	83d35dfe66b38eb1

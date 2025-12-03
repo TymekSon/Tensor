@@ -73898,18 +73898,18 @@ public:
     Tensor* grad() const { return grad_; }
     bool req_grad() const { return req_grad_; }
 
-    static Tensor add(Arena& arena, Tensor& a, Tensor& b);
-    static Tensor sub(Arena& arena, Tensor& a, Tensor& b);
+    static void add(Arena& arena, const Tensor& a, const Tensor& b, Tensor& out);
+    static void sub(Arena& arena, const Tensor& a, const Tensor& b, Tensor& out);
 
-    Tensor activate(Arena &arena, ActivationType type) const;
-    Tensor activate_derivative(Arena &arena, ActivationType type) const;
+    void activate(Arena &arena, ActivationType type, Tensor& out) const;
+    void activate_derivative(Arena &arena, ActivationType type, Tensor& out) const;
 
-    static Tensor conv2d(Arena &arena, const Tensor &image, const Tensor &kernel, int stride);
-    static Tensor maxpool2d(Arena &arena, Tensor &image, int kernel_size, PoolingType type);
+    static void conv2d(Arena &arena, const Tensor &image, const Tensor &kernel, int stride, Tensor& out);
+    static void maxpool2d(Arena &arena, const Tensor &image, int kernel_size, PoolingType type, Tensor& out);
 
-    Tensor transpose(Arena &arena) const;
-    static Tensor matmul(Arena& arena, Tensor& a, Tensor& b);
-    static Tensor element_wise(Arena &arena, Tensor& a, Tensor& b);
+    void transpose(Arena &arena, Tensor& out) const;
+    static void matmul(Arena& arena, const Tensor& a, const Tensor& b, Tensor& out);
+    static void element_wise(Arena &arena, const Tensor& a, const Tensor& b, Tensor& out);
 
     size_t flatten_index(const std::vector<size_t>& shape, const std::vector<size_t>& indices) const;
 
@@ -73974,18 +73974,22 @@ int main() {
 
     Tensor image(&arena, {9,9});
     Tensor kernel(&arena, {4,4});
+    Tensor out(&arena, {6,6});
+    Tensor pooled(&arena, {3,3});
+    Tensor activated(&arena, {3,3});
+
     image.random(0, 1);
     kernel.fill(2.0f);
 
     image.print("Img", true);
 
-    Tensor out = Tensor::conv2d(arena, image, kernel, 1);
+    Tensor::conv2d(arena, image, kernel, 1, out);
     out.print("out", true);
 
-    Tensor pooled = Tensor::maxpool2d(arena, out, 2, PoolingType::MaxPool);
+    Tensor::maxpool2d(arena, out, 2, PoolingType::MaxPool, pooled);
     pooled.print("pooled", true);
 
-    Tensor activated = pooled.activate(arena, ActivationType::ReLU);
+    pooled.activate(arena, ActivationType::ReLU, activated);
     activated.print("activated", true);
 
     std::cout << "Arena used: " << arena.used() << " / " << arena.capacity() << std::endl;

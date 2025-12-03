@@ -79879,18 +79879,18 @@ public:
     Tensor* grad() const { return grad_; }
     bool req_grad() const { return req_grad_; }
 
-    static Tensor add(Arena& arena, Tensor& a, Tensor& b);
-    static Tensor sub(Arena& arena, Tensor& a, Tensor& b);
+    static void add(Arena& arena, const Tensor& a, const Tensor& b, Tensor& out);
+    static void sub(Arena& arena, const Tensor& a, const Tensor& b, Tensor& out);
 
-    Tensor activate(Arena &arena, ActivationType type) const;
-    Tensor activate_derivative(Arena &arena, ActivationType type) const;
+    void activate(Arena &arena, ActivationType type, Tensor& out) const;
+    void activate_derivative(Arena &arena, ActivationType type, Tensor& out) const;
 
-    static Tensor conv2d(Arena &arena, const Tensor &image, const Tensor &kernel, int stride);
-    static Tensor maxpool2d(Arena &arena, Tensor &image, int kernel_size, PoolingType type);
+    static void conv2d(Arena &arena, const Tensor &image, const Tensor &kernel, int stride, Tensor& out);
+    static void maxpool2d(Arena &arena, const Tensor &image, int kernel_size, PoolingType type, Tensor& out);
 
-    Tensor transpose(Arena &arena) const;
-    static Tensor matmul(Arena& arena, Tensor& a, Tensor& b);
-    static Tensor element_wise(Arena &arena, Tensor& a, Tensor& b);
+    void transpose(Arena &arena, Tensor& out) const;
+    static void matmul(Arena& arena, const Tensor& a, const Tensor& b, Tensor& out);
+    static void element_wise(Arena &arena, const Tensor& a, const Tensor& b, Tensor& out);
 
     size_t flatten_index(const std::vector<size_t>& shape, const std::vector<size_t>& indices) const;
 
@@ -79986,31 +79986,31 @@ void Tensor::set_grad(Tensor* grad_tensor) {
     grad_ = grad_tensor;
 }
 
-Tensor Tensor::add(Arena &arena, Tensor &a, Tensor &b) {
+void Tensor::add(Arena &arena, const Tensor &a, const Tensor &b, Tensor& out) {
     if (a.numel_ != b.numel_)
         throw std::out_of_range("Add: Tensor sizes differ");
 
-    Tensor out(&arena, a.shape_);
+    if (a.numel_ != out.numel_)
+        throw std::out_of_range("Add: Output size mismatch");
+
     for (size_t i = 0; i < a.numel_; ++i)
         out[i] = a[i] + b[i];
-
-    return out;
 }
 
 
-Tensor Tensor::sub(Arena &arena, Tensor &a, Tensor &b) {
+void Tensor::sub(Arena &arena, const Tensor &a, const Tensor &b, Tensor& out) {
     if (a.numel_ != b.numel_)
         throw std::out_of_range("Sub: Tensor sizes differ");
 
-    Tensor out(&arena, a.shape_);
+    if (a.numel_ != out.numel_)
+        throw std::out_of_range("Sub: Output size mismatch");
+
     for (size_t i = 0; i < a.numel_; ++i)
         out[i] = a[i] - b[i];
-
-    return out;
 }
 
 
-Tensor Tensor::matmul(Arena &arena, Tensor &a, Tensor &b) {
+void Tensor::matmul(Arena &arena, const Tensor &a, const Tensor &b, Tensor& out) {
     if (a.shape_.size() != 2 || b.shape_.size() != 2)
         throw std::out_of_range("Matmul: both inputs must be 2D");
 
@@ -80021,7 +80021,8 @@ Tensor Tensor::matmul(Arena &arena, Tensor &a, Tensor &b) {
     if (b.shape_[0] != n)
         throw std::invalid_argument("Matmul: inner dimensions mismatch");
 
-    Tensor out(&arena, {m, p});
+    if (out.shape_.size() != 2 || out.shape_[0] != m || out.shape_[1] != p)
+        throw std::invalid_argument("Matmul: output shape mismatch");
 
     for (size_t i = 0; i < m; ++i) {
         for (size_t j = 0; j < p; ++j) {
@@ -80032,24 +80033,22 @@ Tensor Tensor::matmul(Arena &arena, Tensor &a, Tensor &b) {
             out.get(i, j) = sum;
         }
     }
-    return out;
 }
 
 
-Tensor Tensor::element_wise(Arena &arena, Tensor &a, Tensor &b) {
+void Tensor::element_wise(Arena &arena, const Tensor &a, const Tensor &b, Tensor& out) {
     if (a.numel_ != b.numel_)
         throw std::invalid_argument("Element_wise: Tensor sizes differ");
 
-    Tensor out(&arena, a.shape_);
+    if (a.numel_ != out.numel_)
+        throw std::invalid_argument("Element_wise: Output size mismatch");
 
     for (size_t i = 0; i < a.numel_; ++i)
         out[i] = a[i] * b[i];
-
-    return out;
 }
 
 
-Tensor Tensor::conv2d(Arena &arena, const Tensor &image, const Tensor &kernel, int stride) {
+void Tensor::conv2d(Arena &arena, const Tensor &image, const Tensor &kernel, int stride, Tensor& out) {
     size_t H = image.shape_[0];
     size_t W = image.shape_[1];
     size_t KH = kernel.shape_[0];
@@ -80061,7 +80060,8 @@ Tensor Tensor::conv2d(Arena &arena, const Tensor &image, const Tensor &kernel, i
     size_t OH = (H - KH) / stride + 1;
     size_t OW = (W - KW) / stride + 1;
 
-    Tensor out(&arena, {OH, OW});
+    if (out.shape_.size() != 2 || out.shape_[0] != OH || out.shape_[1] != OW)
+        throw std::invalid_argument("Conv2d: output shape mismatch");
 
     for (size_t i = 0; i < OH; ++i) {
         for (size_t j = 0; j < OW; ++j) {
@@ -80081,28 +80081,23 @@ Tensor Tensor::conv2d(Arena &arena, const Tensor &image, const Tensor &kernel, i
             out.get(i, j) = sum;
         }
     }
-
-    return out;
 }
 
 
-Tensor Tensor::maxpool2d(Arena &arena, Tensor &image, int kernel_size, PoolingType type){
+void Tensor::maxpool2d(Arena &arena, const Tensor &image, int kernel_size, PoolingType type, Tensor& out){
     size_t H = image.shape_[0];
     size_t W = image.shape_[1];
 
     size_t OH = H / kernel_size;
     size_t OW = W / kernel_size;
 
-    Tensor out(&arena, {OH, OW});
+    if (out.shape_.size() != 2 || out.shape_[0] != OH || out.shape_[1] != OW)
+        throw std::invalid_argument("Maxpool2d: output shape mismatch");
 
     for (size_t i = 0; i < OH; ++i) {
         for (size_t j = 0; j < OW; ++j) {
 
-            float acc = (type == PoolingType::MaxPool ? -
-# 168 "C:/cpp/Tensor/Tensor.cpp" 3
-                                                        __builtin_inff() 
-# 168 "C:/cpp/Tensor/Tensor.cpp"
-                                                                 : 0.0f);
+            float acc = (type == PoolingType::MaxPool ? -std::numeric_limits<float>::infinity() : 0.0f);
 
             for (size_t ki = 0; ki < kernel_size; ++ki) {
                 for (size_t kj = 0; kj < kernel_size; ++kj) {
@@ -80123,109 +80118,123 @@ Tensor Tensor::maxpool2d(Arena &arena, Tensor &image, int kernel_size, PoolingTy
             out.get(i, j) = acc;
         }
     }
-
-    return out;
 }
 
-Tensor Tensor::activate(Arena &arena, ActivationType type) const {
-    Tensor out(&arena, shape_);
+void Tensor::activate(Arena &arena, ActivationType type, Tensor& out) const {
+    if (out.shape_ != shape_ || out.numel_ != numel_)
+        throw std::invalid_argument("Activate: output shape mismatch");
 
     switch (type) {
         case ActivationType::Identity:
-            for (int i = 0; i < numel_; i++) out.data_[i] = data_[i];
-        return out;
+            for (size_t i = 0; i < numel_; i++) out.data_[i] = data_[i];
+            break;
 
         case ActivationType::ReLU:
-            for (int i = 0; i < numel_; i++)
+            for (size_t i = 0; i < numel_; i++)
                 out.data_[i] = data_[i] > 0.0f ? data_[i] : 0.0f;
-        return out;
+            break;
 
         case ActivationType::LReLU:
-            for (int i = 0; i < numel_; i++)
+            for (size_t i = 0; i < numel_; i++)
                 out.data_[i] = data_[i] > 0.0f ? data_[i] : 0.01f * data_[i];
-        return out;
+            break;
 
         case ActivationType::Sigmoid:
-            for (int i = 0; i < numel_; i++)
+            for (size_t i = 0; i < numel_; i++)
                 out.data_[i] = 1.0f / (1.0f + std::exp(-data_[i]));
-        return out;
+            break;
 
         case ActivationType::Tanh:
-            for (int i = 0; i < numel_; i++)
+            for (size_t i = 0; i < numel_; i++)
                 out.data_[i] = std::tanh(data_[i]);
-        return out;
+            break;
 
         case ActivationType::Softmax: {
             float max_val = -std::numeric_limits<float>::infinity();
-            for (int i = 0; i < numel_; i++)
+            for (size_t i = 0; i < numel_; i++)
                 max_val = std::max(max_val, data_[i]);
 
             float sum = 0.0f;
-            for (int i = 0; i < numel_; i++)
+            for (size_t i = 0; i < numel_; i++)
                 sum += std::exp(data_[i] - max_val);
 
-            for (int i = 0; i < numel_; i++)
+            for (size_t i = 0; i < numel_; i++)
                 out.data_[i] = std::exp(data_[i] - max_val) / sum;
 
-            return out;
+            break;
         }
     }
-    return out;
 }
 
-Tensor Tensor::activate_derivative(Arena &arena, ActivationType type) const {
-    Tensor out(&arena, shape_);
+void Tensor::activate_derivative(Arena &arena, ActivationType type, Tensor& out) const {
+    if (out.shape_ != shape_ || out.numel_ != numel_)
+        throw std::invalid_argument("Activate derivative: output shape mismatch");
 
     switch (type) {
         case ActivationType::Identity:
-            for (int i = 0; i < numel_; i++)
+            for (size_t i = 0; i < numel_; i++)
                 out.data_[i] = 1.0f;
-        return out;
+            break;
 
         case ActivationType::ReLU:
-            for (int i = 0; i < numel_; i++)
+            for (size_t i = 0; i < numel_; i++)
                 out.data_[i] = data_[i] > 0.0f ? 1.0f : 0.0f;
-        return out;
+            break;
 
         case ActivationType::LReLU:
-            for (int i = 0; i < numel_; i++)
+            for (size_t i = 0; i < numel_; i++)
                 out.data_[i] = data_[i] > 0.0f ? 1.0f : 0.01f;
-        return out;
+            break;
 
         case ActivationType::Sigmoid:
-            for (int i = 0; i < numel_; i++) {
+            for (size_t i = 0; i < numel_; i++) {
                 float s = 1.0f / (1.0f + std::exp(-data_[i]));
                 out.data_[i] = s * (1.0f - s);
             }
-        return out;
+            break;
 
         case ActivationType::Tanh:
-            for (int i = 0; i < numel_; i++) {
+            for (size_t i = 0; i < numel_; i++) {
                 float t = std::tanh(data_[i]);
                 out.data_[i] = 1.0f - t * t;
             }
-        return out;
+            break;
 
         case ActivationType::Softmax: {
             float max_val = -std::numeric_limits<float>::infinity();
-            for (int i = 0; i < numel_; i++)
+            for (size_t i = 0; i < numel_; i++)
                 max_val = std::max(max_val, data_[i]);
 
             float sum = 0.0f;
-            for (int i = 0; i < numel_; i++)
+            for (size_t i = 0; i < numel_; i++)
                 sum += std::exp(data_[i] - max_val);
 
-            for (int i = 0; i < numel_; i++) {
+            for (size_t i = 0; i < numel_; i++) {
                 float s = std::exp(data_[i] - max_val) / sum;
                 out.data_[i] = s * (1.0f - s);
             }
 
-            return out;
+            break;
         }
     }
-    return out;
 }
 
+void Tensor::transpose(Arena &arena, Tensor& out) const {
+    if (shape_.size() != 2)
+        throw std::invalid_argument("Transpose: input must be 2D");
+
+    size_t rows = shape_[0];
+    size_t cols = shape_[1];
+
+    if (out.shape_.size() != 2 || out.shape_[0] != cols || out.shape_[1] != rows)
+        throw std::invalid_argument("Transpose: output shape mismatch");
+
+    for (size_t i = 0; i < rows; ++i) {
+        for (size_t j = 0; j < cols; ++j) {
+            out.get(j, i) = get(i, j);
+        }
+    }
+}
 
 
 void Tensor::print(const std::string &name, bool pretty) const {
