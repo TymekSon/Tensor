@@ -7,6 +7,7 @@
 #include <random>
 #include <numeric>
 #include <initializer_list>
+#include<iomanip>
 
 #include "Tensor.h"
 
@@ -50,61 +51,67 @@ void Tensor::set_grad(Tensor* grad_tensor) {
 }
 
 Tensor Tensor::add(Arena &arena, Tensor &a, Tensor &b) {
-    if (a.numel_ != b.numel_) {
-        throw std::out_of_range("Add: Tensor add not equal Tensor size");
-    }
+    if (a.numel_ != b.numel_)
+        throw std::out_of_range("Add: Tensor sizes differ");
+
     Tensor out(&arena, a.shape_);
-    for (size_t i = 0; i < a.numel_; ++i) {
-        out.data_[i] = a.data_[i] + b.data_[i];
-    }
+    for (size_t i = 0; i < a.numel_; ++i)
+        out[i] = a[i] + b[i];
+
     return out;
 }
+
 
 Tensor Tensor::sub(Arena &arena, Tensor &a, Tensor &b) {
-    if (a.numel_ != b.numel_) {
-        throw std::out_of_range("Sub: Tensor add not equal Tensor size");
-    }
+    if (a.numel_ != b.numel_)
+        throw std::out_of_range("Sub: Tensor sizes differ");
+
     Tensor out(&arena, a.shape_);
-    for (size_t i = 0; i < a.numel_; ++i) {
-        out.data_[i] = a.data_[i] - b.data_[i];
-    }
+    for (size_t i = 0; i < a.numel_; ++i)
+        out[i] = a[i] - b[i];
+
     return out;
 }
 
+
 Tensor Tensor::matmul(Arena &arena, Tensor &a, Tensor &b) {
-    if (a.shape_.size() != 2 || b.shape_.size() != 2) {
-        throw std::out_of_range("Matmul: both inputs have to be 2D");
-    }
+    if (a.shape_.size() != 2 || b.shape_.size() != 2)
+        throw std::out_of_range("Matmul: both inputs must be 2D");
+
     size_t m = a.shape_[0];
     size_t n = a.shape_[1];
     size_t p = b.shape_[1];
 
-    if (b.shape_[0] != n) {
+    if (b.shape_[0] != n)
         throw std::invalid_argument("Matmul: inner dimensions mismatch");
-    }
+
     Tensor out(&arena, {m, p});
+
     for (size_t i = 0; i < m; ++i) {
         for (size_t j = 0; j < p; ++j) {
             float sum = 0.0f;
-            for (size_t k = 0; k < n; ++k) {
-                sum += a.data_[i * n + k] * b.data_[k * p + j];
-            }
-            out.data_[i * p + j] = sum;
+            for (size_t k = 0; k < n; ++k)
+                sum += a.get(i, k) * b.get(k, j);
+
+            out.get(i, j) = sum;
         }
     }
     return out;
 }
 
+
 Tensor Tensor::element_wise(Arena &arena, Tensor &a, Tensor &b) {
+    if (a.numel_ != b.numel_)
+        throw std::invalid_argument("Element_wise: Tensor sizes differ");
+
     Tensor out(&arena, a.shape_);
-    if (a.numel_ != b.numel_) {
-        throw std::invalid_argument("Element_wise: Tensor add not equal Tensor size");
-    }
-    for (size_t i = 0; i < a.numel_; ++i) {
-        a.data_[i] = a.data_[i] * b.data_[i];
-    }
+
+    for (size_t i = 0; i < a.numel_; ++i)
+        out[i] = a[i] * b[i];
+
     return out;
 }
+
 
 Tensor Tensor::conv2d(Arena &arena, const Tensor &image, const Tensor &kernel, int stride) {
     size_t H = image.shape_[0];
@@ -112,10 +119,8 @@ Tensor Tensor::conv2d(Arena &arena, const Tensor &image, const Tensor &kernel, i
     size_t KH = kernel.shape_[0];
     size_t KW = kernel.shape_[1];
 
-    if (H < KH || W < KW) {
-        // Obsłuż błąd, np. throw exception
+    if (H < KH || W < KW)
         throw std::invalid_argument("Kernel larger than image");
-    }
 
     size_t OH = (H - KH) / stride + 1;
     size_t OW = (W - KW) / stride + 1;
@@ -124,49 +129,115 @@ Tensor Tensor::conv2d(Arena &arena, const Tensor &image, const Tensor &kernel, i
 
     for (size_t i = 0; i < OH; ++i) {
         for (size_t j = 0; j < OW; ++j) {
+
             float sum = 0.0f;
-            for (size_t k = 0; k < KH; ++k) {
-                for (size_t l = 0; l < KW; ++l) {
-                    size_t img_row = i * stride + k;
-                    size_t img_col = j * stride + l;
-                    sum += image.data_[img_row * W + img_col] * kernel.data_[k * KW + l];
+
+            for (size_t ki = 0; ki < KH; ++ki) {
+                for (size_t kj = 0; kj < KW; ++kj) {
+
+                    size_t img_row = i * stride + ki;
+                    size_t img_col = j * stride + kj;
+
+                    sum += image.get(img_row, img_col) * kernel.get(ki, kj);
                 }
             }
-            out.data_[i * OW + j] = sum;
+
+            out.get(i, j) = sum;
         }
     }
+
     return out;
 }
 
-Tensor Tensor::maxpool2d(Arena &arena, Tensor &image, int kernel_size, PoolingType type){
-    int H = image.shape_[0];
-    int W = image.shape_[1];
 
-    unsigned long long OH = H / kernel_size;
-    unsigned long long OW = W / kernel_size;
+Tensor Tensor::maxpool2d(Arena &arena, Tensor &image, int kernel_size, PoolingType type){
+    size_t H = image.shape_[0];
+    size_t W = image.shape_[1];
+
+    size_t OH = H / kernel_size;
+    size_t OW = W / kernel_size;
 
     Tensor out(&arena, {OH, OW});
 
-    if (type == PoolingType::AvgPool) {
-        for (size_t i = 0; i < OH; ++i) {
-            for (size_t j = 0; j < OW; ++j) {
-                
+    for (size_t i = 0; i < OH; ++i) {
+        for (size_t j = 0; j < OW; ++j) {
+
+            float acc = (type == PoolingType::MaxPool ? -INFINITY : 0.0f);
+
+            for (size_t ki = 0; ki < kernel_size; ++ki) {
+                for (size_t kj = 0; kj < kernel_size; ++kj) {
+
+                    float v = image.get(i * kernel_size + ki,
+                                        j * kernel_size + kj);
+
+                    if (type == PoolingType::MaxPool)
+                        acc = std::max(acc, v);
+                    else
+                        acc += v;
+                }
             }
+
+            if (type == PoolingType::AvgPool)
+                acc /= (kernel_size * kernel_size);
+
+            out.get(i, j) = acc;
         }
     }
 
-    if (type == PoolingType::MaxPool) {
-
-    }
     return out;
 }
 
-void Tensor::print(const std::string& name="") const {
-    if (!name.empty()) std::cout << name << " = ";
-    std::cout << "[";
-    for (size_t i = 0; i < numel_; ++i) {
-        std::cout << data_[i];
-        if (i + 1 < numel_) std::cout << ", ";
+
+void Tensor::print(const std::string &name, bool pretty) const {
+    if (!name.empty()) {
+        std::cout << name << " = ";
     }
-    std::cout << "]\n";
+
+    if (!pretty) {
+        // Standardowe zachowanie
+        std::cout << "[";
+        for (size_t i = 0; i < numel_; ++i) {
+            std::cout << data_[i];
+            if (i + 1 < numel_) std::cout << ", ";
+        }
+        std::cout << "]\n";
+        return;
+    }
+
+    // --- Tryb ładnego drukowania ---
+    std::cout << "\n";
+
+    std::cout.setf(std::ios::fixed);
+    std::cout << std::setprecision(2);
+
+    if (shape_.size() == 1) {
+        // 1D tensor
+        for (size_t i = 0; i < numel_; ++i) {
+            std::cout << data_[i];
+            if (i + 1 < numel_) std::cout << "\t";
+        }
+        std::cout << "\n";
+        return;
+    }
+
+    if (shape_.size() == 2) {
+        // 2D tensor: łamanie linii po szerokości
+        size_t H = shape_[0];
+        size_t W = shape_[1];
+
+        for (size_t i = 0; i < H; ++i) {
+            for (size_t j = 0; j < W; ++j) {
+                std::cout << data_[i * W + j] << "\t";
+            }
+            std::cout << "\n";
+        }
+        return;
+    }
+
+    // 3D+ tensor – wyświetlamy wszystko jako sekwencję wierszy po numel_
+    size_t stride = shape_.back();
+    for (size_t i = 0; i < numel_; ++i) {
+        std::cout << data_[i] << "\t";
+        if ((i + 1) % stride == 0) std::cout << "\n";
+    }
 }

@@ -3,47 +3,30 @@
 #include "Arena.h"
 
 int main() {
-    Arena arena(1024*60);
-
-    Tensor A(&arena, {2,3});
-    Tensor B(&arena, {2,3});
-    Tensor C(&arena, {3,2});
-    Tensor G(&arena, {3,3,3});
-
-    A.fill(1.0f);
-    B.fill(2.0f);
-    C.fill(2.0f);
-
-    A.print("A");
-    B.print("B");
-    C.print("C");
-    G.print("G");
-
-    // Test add i sub
-    Tensor D = Tensor::add(arena, A, B);
-    Tensor E = Tensor::sub(arena, B, A);
-    D.print("A+B");
-    E.print("B-A");
-
-    // Test matmul (2x3) * (3x2) = (2x2)
-    Tensor F = Tensor::matmul(arena, A, C);
-    F.print("A*C");
+    Arena arena(1024);
 
     // Test conv2d
     Tensor image(&arena, {9,9});
-    Tensor kernel(&arena, {3,3});
-    image.fill(1.0f);
+    Tensor kernel(&arena, {4,4});
+    image.random(0, 1);
     kernel.fill(2.0f);
 
-    image.print("Img");
+    image.print("Img", true);
 
     Tensor out = Tensor::conv2d(arena, image, kernel, 1);
-    out.print("out");
+    out.print("out", true);
 
-    Tensor pooled = Tensor::maxpool2d(arena, image, 2, 2, PoolingType::MaxPool);
-    pooled.print("pooled");
+    Tensor pooled = Tensor::maxpool2d(arena, out, 2, PoolingType::MaxPool);
+    pooled.print("pooled", true);
 
-    // Dodatkowy test czy arena się nie przepełnia
+    Tensor cube(&arena, {3,3,3});
+    cube.random(5,2);
+
+    cube.print("cube: ", true);
+
+    float testvalue = cube.get(0,2,1);
+    std::cout << testvalue << std::endl;
+
     std::cout << "Arena used: " << arena.used() << " / " << arena.capacity() << std::endl;
 
     return 0;

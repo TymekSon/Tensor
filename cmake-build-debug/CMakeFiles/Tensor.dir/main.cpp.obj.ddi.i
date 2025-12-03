@@ -73905,13 +73905,21 @@ public:
     Tensor activate_derivative(Arena &arena, ActivationType type) const;
 
     static Tensor conv2d(Arena &arena, const Tensor &image, const Tensor &kernel, int stride);
-    static Tensor maxpool2d(Arena &arena, Tensor &image, int kernel_size, int stride, PoolingType type);
+    static Tensor maxpool2d(Arena &arena, Tensor &image, int kernel_size, PoolingType type);
 
     Tensor transpose(Arena &arena) const;
     static Tensor matmul(Arena& arena, Tensor& a, Tensor& b);
     static Tensor element_wise(Arena &arena, Tensor& a, Tensor& b);
 
-    void print(const std::string& name) const;
+    size_t flatten_index(const std::vector<size_t>& shape, const std::vector<size_t>& indices) const;
+
+    template<typename... Args>
+    float& get(Args... args);
+
+    template<typename... Args>
+    const float& get(Args... args) const;
+
+    void print(const std::string& name, bool pretty) const;
 
     size_t numel() const { return numel_; }
     const std::vector<size_t>& shape() const { return shape_; }
@@ -73925,51 +73933,65 @@ private:
     bool req_grad_;
     Tensor* grad_;
 };
+
+inline size_t Tensor::flatten_index(const std::vector<size_t>& shape,
+                                    const std::vector<size_t>& indices) const {
+    if (shape.size() != indices.size())
+        throw std::out_of_range("Wrong number of indices");
+
+    size_t idx = 0;
+    size_t stride = 1;
+
+    for (int i = (int)shape.size() - 1; i >= 0; --i) {
+        if (indices[i] >= shape[i])
+            throw std::out_of_range("Index out of bounds");
+        idx += indices[i] * stride;
+        stride *= shape[i];
+    }
+    return idx;
+}
+
+template<typename... Args>
+float& Tensor::get(Args... args) {
+    std::vector<size_t> idx{ static_cast<size_t>(args)... };
+    size_t flat = flatten_index(shape_, idx);
+    return data_[flat];
+}
+
+template<typename... Args>
+const float& Tensor::get(Args... args) const {
+    std::vector<size_t> idx{ static_cast<size_t>(args)... };
+    size_t flat = flatten_index(shape_, idx);
+    return data_[flat];
+}
 # 3 "C:/cpp/Tensor/main.cpp" 2
 # 1 "C:/cpp/Tensor/Arena.h" 1
 # 4 "C:/cpp/Tensor/main.cpp" 2
 
 int main() {
-    Arena arena(1024*60);
-
-    Tensor A(&arena, {2,3});
-    Tensor B(&arena, {2,3});
-    Tensor C(&arena, {3,2});
-    Tensor G(&arena, {3,3,3});
-
-    A.fill(1.0f);
-    B.fill(2.0f);
-    C.fill(2.0f);
-
-    A.print("A");
-    B.print("B");
-    C.print("C");
-    G.print("G");
-
-
-    Tensor D = Tensor::add(arena, A, B);
-    Tensor E = Tensor::sub(arena, B, A);
-    D.print("A+B");
-    E.print("B-A");
-
-
-    Tensor F = Tensor::matmul(arena, A, C);
-    F.print("A*C");
+    Arena arena(1024);
 
 
     Tensor image(&arena, {9,9});
-    Tensor kernel(&arena, {3,3});
-    image.fill(1.0f);
+    Tensor kernel(&arena, {4,4});
+    image.random(0, 1);
     kernel.fill(2.0f);
 
-    image.print("Img");
+    image.print("Img", true);
 
     Tensor out = Tensor::conv2d(arena, image, kernel, 1);
-    out.print("out");
+    out.print("out", true);
 
-    Tensor pooled = Tensor::maxpool2d(arena, image, 2, 2, PoolingType::MaxPool);
-    pooled.print("pooled");
+    Tensor pooled = Tensor::maxpool2d(arena, out, 2, PoolingType::MaxPool);
+    pooled.print("pooled", true);
 
+    Tensor cube(&arena, {3,3,3});
+    cube.random(5,2);
+
+    cube.print("cube: ", true);
+
+    float testvalue = cube.get(0,2,1);
+    std::cout << testvalue << std::endl;
 
     std::cout << "Arena used: " << arena.used() << " / " << arena.capacity() << std::endl;
 
