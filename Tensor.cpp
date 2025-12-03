@@ -8,6 +8,9 @@
 #include <numeric>
 #include <initializer_list>
 #include<iomanip>
+#include <cmath>
+#include <algorithm>
+#include <limits>
 
 #include "Tensor.h"
 
@@ -186,6 +189,106 @@ Tensor Tensor::maxpool2d(Arena &arena, Tensor &image, int kernel_size, PoolingTy
 
     return out;
 }
+
+Tensor Tensor::activate(Arena &arena, ActivationType type) const {
+    Tensor out(&arena, shape_);
+
+    switch (type) {
+        case ActivationType::Identity:
+            for (int i = 0; i < numel_; i++) out.data_[i] = data_[i];
+        return out;
+
+        case ActivationType::ReLU:
+            for (int i = 0; i < numel_; i++)
+                out.data_[i] = data_[i] > 0.0f ? data_[i] : 0.0f;
+        return out;
+
+        case ActivationType::LReLU:
+            for (int i = 0; i < numel_; i++)
+                out.data_[i] = data_[i] > 0.0f ? data_[i] : 0.01f * data_[i];
+        return out;
+
+        case ActivationType::Sigmoid:
+            for (int i = 0; i < numel_; i++)
+                out.data_[i] = 1.0f / (1.0f + std::exp(-data_[i]));
+        return out;
+
+        case ActivationType::Tanh:
+            for (int i = 0; i < numel_; i++)
+                out.data_[i] = std::tanh(data_[i]);
+        return out;
+
+        case ActivationType::Softmax: {
+            float max_val = -std::numeric_limits<float>::infinity();
+            for (int i = 0; i < numel_; i++)
+                max_val = std::max(max_val, data_[i]);
+
+            float sum = 0.0f;
+            for (int i = 0; i < numel_; i++)
+                sum += std::exp(data_[i] - max_val);
+
+            for (int i = 0; i < numel_; i++)
+                out.data_[i] = std::exp(data_[i] - max_val) / sum;
+
+            return out;
+        }
+    }
+    return out;
+}
+
+Tensor Tensor::activate_derivative(Arena &arena, ActivationType type) const {
+    Tensor out(&arena, shape_);
+
+    switch (type) {
+        case ActivationType::Identity:
+            for (int i = 0; i < numel_; i++)
+                out.data_[i] = 1.0f;
+        return out;
+
+        case ActivationType::ReLU:
+            for (int i = 0; i < numel_; i++)
+                out.data_[i] = data_[i] > 0.0f ? 1.0f : 0.0f;
+        return out;
+
+        case ActivationType::LReLU:
+            for (int i = 0; i < numel_; i++)
+                out.data_[i] = data_[i] > 0.0f ? 1.0f : 0.01f;
+        return out;
+
+        case ActivationType::Sigmoid:
+            for (int i = 0; i < numel_; i++) {
+                float s = 1.0f / (1.0f + std::exp(-data_[i]));
+                out.data_[i] = s * (1.0f - s);
+            }
+        return out;
+
+        case ActivationType::Tanh:
+            for (int i = 0; i < numel_; i++) {
+                float t = std::tanh(data_[i]);
+                out.data_[i] = 1.0f - t * t;
+            }
+        return out;
+
+        case ActivationType::Softmax: {
+            float max_val = -std::numeric_limits<float>::infinity();
+            for (int i = 0; i < numel_; i++)
+                max_val = std::max(max_val, data_[i]);
+
+            float sum = 0.0f;
+            for (int i = 0; i < numel_; i++)
+                sum += std::exp(data_[i] - max_val);
+
+            for (int i = 0; i < numel_; i++) {
+                float s = std::exp(data_[i] - max_val) / sum;
+                out.data_[i] = s * (1.0f - s);
+            }
+
+            return out;
+        }
+    }
+    return out;
+}
+
 
 
 void Tensor::print(const std::string &name, bool pretty) const {

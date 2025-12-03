@@ -19,13 +19,8 @@ int main() {
     Tensor pooled = Tensor::maxpool2d(arena, out, 2, PoolingType::MaxPool);
     pooled.print("pooled", true);
 
-    Tensor cube(&arena, {3,3,3});
-    cube.random(5,2);
-
-    cube.print("cube: ", true);
-
-    float testvalue = cube.get(0,2,1);
-    std::cout << testvalue << std::endl;
+    Tensor activated = pooled.activate(arena, ActivationType::ReLU);
+    activated.print("activated", true);
 
     std::cout << "Arena used: " << arena.used() << " / " << arena.capacity() << std::endl;
 
