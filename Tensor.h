@@ -59,7 +59,8 @@ public:
     template<typename... Args>
     const float& get(Args... args) const;
 
-    void print(const std::string& name, bool pretty) const;
+    void print(const std::string& name, bool pretty, int precision) const;
+    void save_as_png(const std::string& filename) const;
 
     size_t numel() const { return numel_; }
     const std::vector<size_t>& shape() const { return shape_; }

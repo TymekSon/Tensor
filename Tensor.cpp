@@ -7,11 +7,13 @@
 #include <random>
 #include <numeric>
 #include <initializer_list>
-#include<iomanip>
+#include <iomanip>
 #include <cmath>
 #include <algorithm>
 #include <limits>
 
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb_image_write.h"
 #include "Tensor.h"
 
 Tensor::Tensor() : data_(nullptr), numel_(0), req_grad_(false), grad_(nullptr) {}
@@ -340,7 +342,7 @@ void Tensor::transpose(Arena &arena, Tensor& out) const {
 }
 
 
-void Tensor::print(const std::string &name, bool pretty) const {
+void Tensor::print(const std::string &name, bool pretty, int precision) const {
     if (!name.empty()) {
         std::cout << name << " = ";
     }
@@ -360,7 +362,7 @@ void Tensor::print(const std::string &name, bool pretty) const {
     std::cout << "\n";
 
     std::cout.setf(std::ios::fixed);
-    std::cout << std::setprecision(3);
+    std::cout << std::setprecision(precision);
 
     if (shape_.size() == 1) {
         for (size_t i = 0; i < numel_; ++i) {
@@ -388,5 +390,24 @@ void Tensor::print(const std::string &name, bool pretty) const {
     for (size_t i = 0; i < numel_; ++i) {
         std::cout << data_[i] << "\t";
         if ((i + 1) % stride == 0) std::cout << "\n";
+    }
+}
+
+void Tensor::save_as_png(const std::string& filename) const {
+    if (shape_.size() != 2) {
+        throw std::runtime_error("save_as_png wspiera tylko tensory 2D (np. [wysokość, szerokość] dla grayscale).");
+    }
+    size_t height = shape_[0];
+    size_t width = shape_[1];
+    // Bufor na piksele uint8_t (grayscale, 0-255)
+    std::vector<uint8_t> pixels(numel_);
+    for (size_t i = 0; i < numel_; ++i) {
+        float val = data_[i];
+        val = std::clamp(val, 0.0f, 1.0f);  // Upewnij się, że w [0,1]
+        pixels[i] = static_cast<uint8_t>(val * 255.0f + 0.5f);  // Konwersja na 0-255
+    }
+    // Zapisz PNG (1 kanał = grayscale)
+    if (stbi_write_png(filename.c_str(), width, height, 1, pixels.data(), width) == 0) {
+        throw std::runtime_error("Błąd zapisu PNG: " + filename);
     }
 }

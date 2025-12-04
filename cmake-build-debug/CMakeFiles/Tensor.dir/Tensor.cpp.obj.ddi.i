@@ -79826,11 +79826,1814 @@ lexicographical_compare(_ExecutionPolicy&& __exec, _ForwardIterator1 __first1, _
 # 13 "C:/cpp/Tensor/Tensor.cpp" 2
 
 
+
+# 1 "C:/cpp/Tensor/stb_image_write.h" 1
+# 154 "C:/cpp/Tensor/stb_image_write.h"
+# 1 "C:/mingw64/include/c++/15.2.0/stdlib.h" 1 3
+# 38 "C:/mingw64/include/c++/15.2.0/stdlib.h" 3
+using std::abort;
+using std::atexit;
+using std::exit;
+# 49 "C:/mingw64/include/c++/15.2.0/stdlib.h" 3
+  using std::_Exit;
+
+
+
+
+using std::div_t;
+using std::ldiv_t;
+
+using std::abs;
+using std::atof;
+using std::atoi;
+using std::atol;
+using std::bsearch;
+using std::calloc;
+using std::div;
+using std::free;
+using std::getenv;
+using std::labs;
+using std::ldiv;
+using std::malloc;
+
+using std::mblen;
+using std::mbstowcs;
+using std::mbtowc;
+
+using std::qsort;
+using std::rand;
+using std::realloc;
+using std::srand;
+using std::strtod;
+using std::strtol;
+using std::strtoul;
+using std::system;
+
+using std::wcstombs;
+using std::wctomb;
+# 155 "C:/cpp/Tensor/stb_image_write.h" 2
+# 170 "C:/cpp/Tensor/stb_image_write.h"
+
+# 170 "C:/cpp/Tensor/stb_image_write.h"
+extern "C" int stbi_write_tga_with_rle;
+extern "C" int stbi_write_png_compression_level;
+extern "C" int stbi_write_force_png_filter;
+
+
+
+extern "C" int stbi_write_png(char const *filename, int w, int h, int comp, const void *data, int stride_in_bytes);
+extern "C" int stbi_write_bmp(char const *filename, int w, int h, int comp, const void *data);
+extern "C" int stbi_write_tga(char const *filename, int w, int h, int comp, const void *data);
+extern "C" int stbi_write_hdr(char const *filename, int w, int h, int comp, const float *data);
+extern "C" int stbi_write_jpg(char const *filename, int x, int y, int comp, const void *data, int quality);
+
+
+
+
+
+
+typedef void stbi_write_func(void *context, void *data, int size);
+
+extern "C" int stbi_write_png_to_func(stbi_write_func *func, void *context, int w, int h, int comp, const void *data, int stride_in_bytes);
+extern "C" int stbi_write_bmp_to_func(stbi_write_func *func, void *context, int w, int h, int comp, const void *data);
+extern "C" int stbi_write_tga_to_func(stbi_write_func *func, void *context, int w, int h, int comp, const void *data);
+extern "C" int stbi_write_hdr_to_func(stbi_write_func *func, void *context, int w, int h, int comp, const float *data);
+extern "C" int stbi_write_jpg_to_func(stbi_write_func *func, void *context, int x, int y, int comp, const void *data, int quality);
+
+extern "C" void stbi_flip_vertically_on_write(int flip_boolean);
+# 214 "C:/cpp/Tensor/stb_image_write.h"
+# 1 "C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdarg.h" 1 3 4
+# 1 "C:/mingw64/x86_64-w64-mingw32/include/stdarg.h" 1 3 4
+# 140 "C:/mingw64/x86_64-w64-mingw32/include/stdarg.h" 3 4
+# 1 "C:/mingw64/x86_64-w64-mingw32/include/_mingw_stdarg.h" 1 3 4
+# 141 "C:/mingw64/x86_64-w64-mingw32/include/stdarg.h" 2 3 4
+# 2 "C:/mingw64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdarg.h" 2 3 4
+# 215 "C:/cpp/Tensor/stb_image_write.h" 2
+# 1 "C:/mingw64/include/c++/15.2.0/stdlib.h" 1 3
+# 216 "C:/cpp/Tensor/stb_image_write.h" 2
+# 1 "C:/mingw64/x86_64-w64-mingw32/include/string.h" 1 3
+# 21 "C:/mingw64/x86_64-w64-mingw32/include/string.h" 3
+
+# 21 "C:/mingw64/x86_64-w64-mingw32/include/string.h" 3
+extern "C" {
+# 45 "C:/mingw64/x86_64-w64-mingw32/include/string.h" 3
+  __attribute__ ((__dllimport__)) void *__attribute__((__cdecl__)) _memccpy(void *_Dst,const void *_Src,int _Val,size_t _MaxCount);
+  void *__attribute__((__cdecl__)) memchr(const void *_Buf ,int _Val,size_t _MaxCount);
+  __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _memicmp(const void *_Buf1,const void *_Buf2,size_t _Size);
+  __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _memicmp_l(const void *_Buf1,const void *_Buf2,size_t _Size,_locale_t _Locale);
+  int __attribute__((__cdecl__)) memcmp(const void *_Buf1,const void *_Buf2,size_t _Size);
+  void * __attribute__((__cdecl__)) memcpy(void * __restrict__ _Dst,const void * __restrict__ _Src,size_t _Size) ;
+  __attribute__((dllimport)) errno_t __attribute__((__cdecl__)) memcpy_s (void *_dest,size_t _numberOfElements,const void *_src,size_t _count);
+  void * __attribute__((__cdecl__)) mempcpy (void *_Dst, const void *_Src, size_t _Size);
+  void * __attribute__((__cdecl__)) memset(void *_Dst,int _Val,size_t _Size);
+
+  void * __attribute__((__cdecl__)) memccpy(void *_Dst,const void *_Src,int _Val,size_t _Size) ;
+  int __attribute__((__cdecl__)) memicmp(const void *_Buf1,const void *_Buf2,size_t _Size) ;
+
+
+  char * __attribute__((__cdecl__)) _strset(char *_Str,int _Val) ;
+  char * __attribute__((__cdecl__)) _strset_l(char *_Str,int _Val,_locale_t _Locale) ;
+  char * __attribute__((__cdecl__)) strcpy(char * __restrict__ _Dest,const char * __restrict__ _Source);
+  char * __attribute__((__cdecl__)) strcat(char * __restrict__ _Dest,const char * __restrict__ _Source);
+  int __attribute__((__cdecl__)) strcmp(const char *_Str1,const char *_Str2);
+  size_t __attribute__((__cdecl__)) strlen(const char *_Str);
+  size_t __attribute__((__cdecl__)) strnlen(const char *_Str,size_t _MaxCount);
+  void *__attribute__((__cdecl__)) memmove(void *_Dst,const void *_Src,size_t _Size) ;
+
+
+
+
+  __attribute__ ((__dllimport__)) char *__attribute__((__cdecl__)) _strdup(const char *_Src);
+
+
+
+  char *__attribute__((__cdecl__)) strchr(const char *_Str,int _Val);
+  __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _stricmp(const char *_Str1,const char *_Str2);
+  __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _strcmpi(const char *_Str1,const char *_Str2);
+  __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _stricmp_l(const char *_Str1,const char *_Str2,_locale_t _Locale);
+  int __attribute__((__cdecl__)) strcoll(const char *_Str1,const char *_Str2);
+  __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _strcoll_l(const char *_Str1,const char *_Str2,_locale_t _Locale);
+  __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _stricoll(const char *_Str1,const char *_Str2);
+  __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _stricoll_l(const char *_Str1,const char *_Str2,_locale_t _Locale);
+  __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _strncoll (const char *_Str1,const char *_Str2,size_t _MaxCount);
+  __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _strncoll_l(const char *_Str1,const char *_Str2,size_t _MaxCount,_locale_t _Locale);
+  __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _strnicoll (const char *_Str1,const char *_Str2,size_t _MaxCount);
+  __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _strnicoll_l(const char *_Str1,const char *_Str2,size_t _MaxCount,_locale_t _Locale);
+  size_t __attribute__((__cdecl__)) strcspn(const char *_Str,const char *_Control);
+  __attribute__ ((__dllimport__)) char *__attribute__((__cdecl__)) _strerror(const char *_ErrMsg) ;
+  char *__attribute__((__cdecl__)) strerror(int) ;
+  __attribute__ ((__dllimport__)) char *__attribute__((__cdecl__)) _strlwr(char *_String) ;
+  char *strlwr_l(char *_String,_locale_t _Locale) ;
+  char *__attribute__((__cdecl__)) strncat(char * __restrict__ _Dest,const char * __restrict__ _Source,size_t _Count) ;
+  int __attribute__((__cdecl__)) strncmp(const char *_Str1,const char *_Str2,size_t _MaxCount);
+  __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _strnicmp(const char *_Str1,const char *_Str2,size_t _MaxCount);
+  __attribute__ ((__dllimport__)) int __attribute__((__cdecl__)) _strnicmp_l(const char *_Str1,const char *_Str2,size_t _MaxCount,_locale_t _Locale);
+  char *strncpy(char * __restrict__ _Dest,const char * __restrict__ _Source,size_t _Count) ;
+  __attribute__ ((__dllimport__)) char *__attribute__((__cdecl__)) _strnset(char *_Str,int _Val,size_t _MaxCount) ;
+  __attribute__ ((__dllimport__)) char *__attribute__((__cdecl__)) _strnset_l(char *str,int c,size_t count,_locale_t _Locale) ;
+  char *__attribute__((__cdecl__)) strpbrk(const char *_Str,const char *_Control);
+  char *__attribute__((__cdecl__)) strrchr(const char *_Str,int _Ch);
+  __attribute__ ((__dllimport__)) char *__attribute__((__cdecl__)) _strrev(char *_Str);
+  size_t __attribute__((__cdecl__)) strspn(const char *_Str,const char *_Control);
+  char *__attribute__((__cdecl__)) strstr(const char *_Str,const char *_SubStr);
+  char *__attribute__((__cdecl__)) strtok(char * __restrict__ _Str,const char * __restrict__ _Delim) ;
+       
+
+  char *strtok_r(char * __restrict__ _Str, const char * __restrict__ _Delim, char ** __restrict__ __last);
+       
+  __attribute__ ((__dllimport__)) char *__attribute__((__cdecl__)) _strupr(char *_String) ;
+  __attribute__ ((__dllimport__)) char *_strupr_l(char *_String,_locale_t _Locale) ;
+  size_t __attribute__((__cdecl__)) strxfrm(char * __restrict__ _Dst,const char * __restrict__ _Src,size_t _MaxCount);
+  __attribute__ ((__dllimport__)) size_t __attribute__((__cdecl__)) _strxfrm_l(char * __restrict__ _Dst,const char * __restrict__ _Src,size_t _MaxCount,_locale_t _Locale);
+
+
+
+
+
+
+  char *__attribute__((__cdecl__)) strdup(const char *_Src) ;
+
+
+
+  int __attribute__((__cdecl__)) strcmpi(const char *_Str1,const char *_Str2) ;
+  int __attribute__((__cdecl__)) stricmp(const char *_Str1,const char *_Str2) ;
+  char *__attribute__((__cdecl__)) strlwr(char *_Str) ;
+  int __attribute__((__cdecl__)) strnicmp(const char *_Str1,const char *_Str,size_t _MaxCount) ;
+  int __attribute__((__cdecl__)) strncasecmp (const char *, const char *, size_t);
+  int __attribute__((__cdecl__)) strcasecmp (const char *, const char *);
+
+
+
+
+
+
+
+  char *__attribute__((__cdecl__)) strnset(char *_Str,int _Val,size_t _MaxCount) ;
+  char *__attribute__((__cdecl__)) strrev(char *_Str) ;
+  char *__attribute__((__cdecl__)) strset(char *_Str,int _Val) ;
+  char *__attribute__((__cdecl__)) strupr(char *_Str) ;
+# 222 "C:/mingw64/x86_64-w64-mingw32/include/string.h" 3
+}
+
+
+# 1 "C:/mingw64/x86_64-w64-mingw32/include/sec_api/string_s.h" 1 3
+# 9 "C:/mingw64/x86_64-w64-mingw32/include/sec_api/string_s.h" 3
+# 1 "C:/mingw64/x86_64-w64-mingw32/include/string.h" 1 3
+# 10 "C:/mingw64/x86_64-w64-mingw32/include/sec_api/string_s.h" 2 3
+# 21 "C:/mingw64/x86_64-w64-mingw32/include/sec_api/string_s.h" 3
+extern "C" {
+
+
+  __attribute__ ((__dllimport__)) errno_t __attribute__((__cdecl__)) _strset_s(char *_Dst,size_t _DstSize,int _Value);
+  extern "C++" { template <size_t __size> inline errno_t __attribute__((__cdecl__)) _strset_s(char (&_Dst)[__size], int _Value) { return _strset_s(_Dst,__size,_Value); } }
+  __attribute__ ((__dllimport__)) errno_t __attribute__((__cdecl__)) _strerror_s(char *_Buf,size_t _SizeInBytes,const char *_ErrMsg);
+  extern "C++" { template <size_t __size> inline errno_t __attribute__((__cdecl__)) _strerror_s(char (&_Buf)[__size], const char * _ErrMsg) { return _strerror_s(_Buf,__size,_ErrMsg); } }
+  __attribute__((dllimport)) errno_t __attribute__((__cdecl__)) strerror_s(char *_Buf,size_t _SizeInBytes,int _ErrNum);
+  extern "C++" { template <size_t __size> inline errno_t __attribute__((__cdecl__)) strerror_s(char (&_Buf)[__size], int _ErrNum) { return strerror_s(_Buf,__size,_ErrNum); } }
+  __attribute__ ((__dllimport__)) errno_t __attribute__((__cdecl__)) _strlwr_s(char *_Str,size_t _Size);
+  extern "C++" { template <size_t __size> inline errno_t __attribute__((__cdecl__)) _strlwr_s(char (&_Str)[__size]) { return _strlwr_s(_Str,__size); } }
+  __attribute__ ((__dllimport__)) errno_t __attribute__((__cdecl__)) _strlwr_s_l(char *_Str,size_t _Size,_locale_t _Locale);
+  extern "C++" { template <size_t __size> inline errno_t __attribute__((__cdecl__)) _strlwr_s_l(char (&_Str)[__size], _locale_t _Locale) { return _strlwr_s_l(_Str,__size,_Locale); } }
+  __attribute__ ((__dllimport__)) errno_t __attribute__((__cdecl__)) _strnset_s(char *_Str,size_t _Size,int _Val,size_t _MaxCount);
+  extern "C++" { template <size_t __size> inline errno_t __attribute__((__cdecl__)) _strnset_s(char (&_Str)[__size], int _Val, size_t _MaxCount) { return _strnset_s(_Str,__size,_Val,_MaxCount); } }
+  __attribute__ ((__dllimport__)) errno_t __attribute__((__cdecl__)) _strupr_s(char *_Str,size_t _Size);
+  extern "C++" { template <size_t __size> inline errno_t __attribute__((__cdecl__)) _strupr_s(char (&_Str)[__size]) { return _strupr_s(_Str,__size); } }
+  __attribute__ ((__dllimport__)) errno_t __attribute__((__cdecl__)) _strupr_s_l(char *_Str,size_t _Size,_locale_t _Locale);
+  extern "C++" { template <size_t __size> inline errno_t __attribute__((__cdecl__)) _strupr_s_l(char (&_Str)[__size], _locale_t _Locale) { return _strupr_s_l(_Str,__size,_Locale); } }
+
+  __attribute__ ((__dllimport__)) errno_t __attribute__((__cdecl__)) strncat_s(char *_Dst,size_t _DstSizeInChars,const char *_Src,size_t _MaxCount);
+  extern "C++" { template <size_t __size> inline errno_t __attribute__((__cdecl__)) strncat_s(char (&_Dst)[__size], const char * _Src, size_t _MaxCount) { return strncat_s(_Dst,__size,_Src,_MaxCount); } }
+  __attribute__ ((__dllimport__)) errno_t __attribute__((__cdecl__)) _strncat_s_l(char *_Dst,size_t _DstSizeInChars,const char *_Src,size_t _MaxCount,_locale_t _Locale);
+  extern "C++" { template <size_t __size> inline errno_t __attribute__((__cdecl__)) _strncat_s_l(char (&_Dst)[__size], const char * _Src, size_t _MaxCount, _locale_t _Locale) { return _strncat_s_l(_Dst,__size,_Src,_MaxCount,_Locale); } }
+  __attribute__ ((__dllimport__)) errno_t __attribute__((__cdecl__)) strcpy_s(char *_Dst, rsize_t _SizeInBytes, const char *_Src);
+  extern "C++" { template <size_t __size> inline errno_t __attribute__((__cdecl__)) strcpy_s(char (&_Dest)[__size], const char * _Source) { return strcpy_s(_Dest,__size,_Source); } }
+  __attribute__ ((__dllimport__)) errno_t __attribute__((__cdecl__)) strncpy_s(char *_Dst, size_t _DstSizeInChars, const char *_Src, size_t _MaxCount);
+  extern "C++" { template <size_t __size> inline errno_t __attribute__((__cdecl__)) strncpy_s(char (&_Dest)[__size], const char * _Source, size_t _MaxCount) { return strncpy_s(_Dest,__size,_Source,_MaxCount); } }
+  __attribute__ ((__dllimport__)) errno_t __attribute__((__cdecl__)) _strncpy_s_l(char *_Dst, size_t _DstSizeInChars, const char *_Src, size_t _MaxCount, _locale_t _Locale);
+  extern "C++" { template <size_t __size> inline errno_t __attribute__((__cdecl__)) _strncpy_s_l(char (&_Dest)[__size], const char * _Source, size_t _MaxCount, _locale_t _Locale) { return _strncpy_s_l(_Dest,__size,_Source,_MaxCount,_Locale); } }
+  __attribute__ ((__dllimport__)) char *__attribute__((__cdecl__)) strtok_s(char *_Str,const char *_Delim,char **_Context);
+  __attribute__ ((__dllimport__)) char *__attribute__((__cdecl__)) _strtok_s_l(char *_Str,const char *_Delim,char **_Context,_locale_t _Locale);
+  __attribute__ ((__dllimport__)) errno_t __attribute__((__cdecl__)) strcat_s(char *_Dst, rsize_t _SizeInBytes, const char * _Src);
+  extern "C++" { template <size_t __size> inline errno_t __attribute__((__cdecl__)) strcat_s(char (&_Dest)[__size], const char * _Source) { return strcat_s(_Dest,__size,_Source); } }
+
+  inline __attribute__((__always_inline__)) size_t __attribute__((__cdecl__)) strnlen_s(const char * _src, size_t _count) {
+    return _src ? strnlen(_src, _count) : 0;
+  }
+
+  __attribute__((dllimport)) errno_t __attribute__((__cdecl__)) memmove_s(void *_dest,size_t _numberOfElements,const void *_src,size_t _count);
+# 103 "C:/mingw64/x86_64-w64-mingw32/include/sec_api/string_s.h" 3
+}
+# 226 "C:/mingw64/x86_64-w64-mingw32/include/string.h" 2 3
+# 217 "C:/cpp/Tensor/stb_image_write.h" 2
+# 1 "C:/mingw64/include/c++/15.2.0/math.h" 1 3
+# 38 "C:/mingw64/include/c++/15.2.0/math.h" 3
+using std::abs;
+using std::acos;
+using std::asin;
+using std::atan;
+using std::atan2;
+using std::cos;
+using std::sin;
+using std::tan;
+using std::cosh;
+using std::sinh;
+using std::tanh;
+using std::exp;
+using std::frexp;
+using std::ldexp;
+using std::log;
+using std::log10;
+using std::modf;
+using std::pow;
+using std::sqrt;
+using std::ceil;
+using std::fabs;
+using std::floor;
+using std::fmod;
+
+
+using std::fpclassify;
+using std::isfinite;
+using std::isinf;
+using std::isnan;
+using std::isnormal;
+using std::signbit;
+using std::isgreater;
+using std::isgreaterequal;
+using std::isless;
+using std::islessequal;
+using std::islessgreater;
+using std::isunordered;
+
+
+
+using std::acosh;
+using std::asinh;
+using std::atanh;
+using std::cbrt;
+using std::copysign;
+using std::erf;
+using std::erfc;
+using std::exp2;
+using std::expm1;
+using std::fdim;
+using std::fma;
+using std::fmax;
+using std::fmin;
+using std::hypot;
+using std::ilogb;
+using std::lgamma;
+using std::llrint;
+using std::llround;
+using std::log1p;
+using std::log2;
+using std::logb;
+using std::lrint;
+using std::lround;
+using std::nearbyint;
+using std::nextafter;
+using std::nexttoward;
+using std::remainder;
+using std::remquo;
+using std::rint;
+using std::round;
+using std::scalbln;
+using std::scalbn;
+using std::tgamma;
+using std::trunc;
+# 183 "C:/mingw64/include/c++/15.2.0/math.h" 3
+using std::lerp;
+# 218 "C:/cpp/Tensor/stb_image_write.h" 2
+# 244 "C:/cpp/Tensor/stb_image_write.h"
+# 1 "C:/mingw64/x86_64-w64-mingw32/include/assert.h" 1 3
+# 17 "C:/mingw64/x86_64-w64-mingw32/include/assert.h" 3
+# 1 "C:/mingw64/include/c++/15.2.0/stdlib.h" 1 3
+# 18 "C:/mingw64/x86_64-w64-mingw32/include/assert.h" 2 3
+
+
+
+extern "C" {
+
+
+__attribute__ ((__dllimport__)) void __attribute__((__cdecl__)) __attribute__ ((__noreturn__)) _wassert(const wchar_t *_Message,const wchar_t *_File,unsigned _Line);
+__attribute__ ((__dllimport__)) void __attribute__((__cdecl__)) __attribute__ ((__noreturn__)) _assert (const char *_Message, const char *_File, unsigned _Line);
+
+
+}
+# 245 "C:/cpp/Tensor/stb_image_write.h" 2
+# 255 "C:/cpp/Tensor/stb_image_write.h"
+
+# 255 "C:/cpp/Tensor/stb_image_write.h"
+int stbi_write_png_compression_level = 8;
+int stbi_write_tga_with_rle = 1;
+int stbi_write_force_png_filter = -1;
+
+
+static int stbi__flip_vertically_on_write = 0;
+
+extern "C" void stbi_flip_vertically_on_write(int flag)
+{
+   stbi__flip_vertically_on_write = flag;
+}
+
+typedef struct
+{
+   stbi_write_func *func;
+   void *context;
+   unsigned char buffer[64];
+   int buf_used;
+} stbi__write_context;
+
+
+static void stbi__start_write_callbacks(stbi__write_context *s, stbi_write_func *c, void *context)
+{
+   s->func = c;
+   s->context = context;
+}
+
+
+
+static void stbi__stdio_write(void *context, void *data, int size)
+{
+   fwrite(data,1,size,(FILE*) context);
+}
+# 304 "C:/cpp/Tensor/stb_image_write.h"
+static FILE *stbiw__fopen(char const *filename, char const *mode)
+{
+   FILE *f;
+# 327 "C:/cpp/Tensor/stb_image_write.h"
+   f = fopen(filename, mode);
+
+   return f;
+}
+
+static int stbi__start_write_file(stbi__write_context *s, const char *filename)
+{
+   FILE *f = stbiw__fopen(filename, "wb");
+   stbi__start_write_callbacks(s, stbi__stdio_write, (void *) f);
+   return f != 
+# 336 "C:/cpp/Tensor/stb_image_write.h" 3 4
+              __null
+# 336 "C:/cpp/Tensor/stb_image_write.h"
+                  ;
+}
+
+static void stbi__end_write_file(stbi__write_context *s)
+{
+   fclose((FILE *)s->context);
+}
+
+
+
+typedef unsigned int stbiw_uint32;
+typedef int stb_image_write_test[sizeof(stbiw_uint32)==4 ? 1 : -1];
+
+static void stbiw__writefv(stbi__write_context *s, const char *fmt, va_list v)
+{
+   while (*fmt) {
+      switch (*fmt++) {
+         case ' ': break;
+         case '1': { unsigned char x = (unsigned char) ((
+# 354 "C:/cpp/Tensor/stb_image_write.h" 3 4
+                                      __builtin_va_arg(
+# 354 "C:/cpp/Tensor/stb_image_write.h"
+                                      v
+# 354 "C:/cpp/Tensor/stb_image_write.h" 3 4
+                                      ,
+# 354 "C:/cpp/Tensor/stb_image_write.h"
+                                      int
+# 354 "C:/cpp/Tensor/stb_image_write.h" 3 4
+                                      )
+# 354 "C:/cpp/Tensor/stb_image_write.h"
+                                      ) & 0xff);
+                     s->func(s->context,&x,1);
+                     break; }
+         case '2': { int x = 
+# 357 "C:/cpp/Tensor/stb_image_write.h" 3 4
+                            __builtin_va_arg(
+# 357 "C:/cpp/Tensor/stb_image_write.h"
+                            v
+# 357 "C:/cpp/Tensor/stb_image_write.h" 3 4
+                            ,
+# 357 "C:/cpp/Tensor/stb_image_write.h"
+                            int
+# 357 "C:/cpp/Tensor/stb_image_write.h" 3 4
+                            )
+# 357 "C:/cpp/Tensor/stb_image_write.h"
+                                         ;
+                     unsigned char b[2];
+                     b[0] = (unsigned char) ((x) & 0xff);
+                     b[1] = (unsigned char) ((x>>8) & 0xff);
+                     s->func(s->context,b,2);
+                     break; }
+         case '4': { stbiw_uint32 x = 
+# 363 "C:/cpp/Tensor/stb_image_write.h" 3 4
+                                     __builtin_va_arg(
+# 363 "C:/cpp/Tensor/stb_image_write.h"
+                                     v
+# 363 "C:/cpp/Tensor/stb_image_write.h" 3 4
+                                     ,
+# 363 "C:/cpp/Tensor/stb_image_write.h"
+                                     int
+# 363 "C:/cpp/Tensor/stb_image_write.h" 3 4
+                                     )
+# 363 "C:/cpp/Tensor/stb_image_write.h"
+                                                  ;
+                     unsigned char b[4];
+                     b[0]=(unsigned char) ((x) & 0xff);
+                     b[1]=(unsigned char) ((x>>8) & 0xff);
+                     b[2]=(unsigned char) ((x>>16) & 0xff);
+                     b[3]=(unsigned char) ((x>>24) & 0xff);
+                     s->func(s->context,b,4);
+                     break; }
+         default:
+            
+# 372 "C:/cpp/Tensor/stb_image_write.h" 3
+           (void) ((!!(
+# 372 "C:/cpp/Tensor/stb_image_write.h"
+           0
+# 372 "C:/cpp/Tensor/stb_image_write.h" 3
+           )) || (_assert(
+# 372 "C:/cpp/Tensor/stb_image_write.h"
+           "0"
+# 372 "C:/cpp/Tensor/stb_image_write.h" 3
+           ,"C:/cpp/Tensor/stb_image_write.h",372),0))
+# 372 "C:/cpp/Tensor/stb_image_write.h"
+                          ;
+            return;
+      }
+   }
+}
+
+static void stbiw__writef(stbi__write_context *s, const char *fmt, ...)
+{
+   va_list v;
+   
+# 381 "C:/cpp/Tensor/stb_image_write.h" 3 4
+  __builtin_va_start(
+# 381 "C:/cpp/Tensor/stb_image_write.h"
+  v
+# 381 "C:/cpp/Tensor/stb_image_write.h" 3 4
+  ,
+# 381 "C:/cpp/Tensor/stb_image_write.h"
+  fmt
+# 381 "C:/cpp/Tensor/stb_image_write.h" 3 4
+  )
+# 381 "C:/cpp/Tensor/stb_image_write.h"
+                  ;
+   stbiw__writefv(s, fmt, v);
+   
+# 383 "C:/cpp/Tensor/stb_image_write.h" 3 4
+  __builtin_va_end(
+# 383 "C:/cpp/Tensor/stb_image_write.h"
+  v
+# 383 "C:/cpp/Tensor/stb_image_write.h" 3 4
+  )
+# 383 "C:/cpp/Tensor/stb_image_write.h"
+           ;
+}
+
+static void stbiw__write_flush(stbi__write_context *s)
+{
+   if (s->buf_used) {
+      s->func(s->context, &s->buffer, s->buf_used);
+      s->buf_used = 0;
+   }
+}
+
+static void stbiw__putc(stbi__write_context *s, unsigned char c)
+{
+   s->func(s->context, &c, 1);
+}
+
+static void stbiw__write1(stbi__write_context *s, unsigned char a)
+{
+   if ((size_t)s->buf_used + 1 > sizeof(s->buffer))
+      stbiw__write_flush(s);
+   s->buffer[s->buf_used++] = a;
+}
+
+static void stbiw__write3(stbi__write_context *s, unsigned char a, unsigned char b, unsigned char c)
+{
+   int n;
+   if ((size_t)s->buf_used + 3 > sizeof(s->buffer))
+      stbiw__write_flush(s);
+   n = s->buf_used;
+   s->buf_used = n+3;
+   s->buffer[n+0] = a;
+   s->buffer[n+1] = b;
+   s->buffer[n+2] = c;
+}
+
+static void stbiw__write_pixel(stbi__write_context *s, int rgb_dir, int comp, int write_alpha, int expand_mono, unsigned char *d)
+{
+   unsigned char bg[3] = { 255, 0, 255}, px[3];
+   int k;
+
+   if (write_alpha < 0)
+      stbiw__write1(s, d[comp - 1]);
+
+   switch (comp) {
+      case 2:
+      case 1:
+         if (expand_mono)
+            stbiw__write3(s, d[0], d[0], d[0]);
+         else
+            stbiw__write1(s, d[0]);
+         break;
+      case 4:
+         if (!write_alpha) {
+
+            for (k = 0; k < 3; ++k)
+               px[k] = bg[k] + ((d[k] - bg[k]) * d[3]) / 255;
+            stbiw__write3(s, px[1 - rgb_dir], px[1], px[1 + rgb_dir]);
+            break;
+         }
+
+      case 3:
+         stbiw__write3(s, d[1 - rgb_dir], d[1], d[1 + rgb_dir]);
+         break;
+   }
+   if (write_alpha > 0)
+      stbiw__write1(s, d[comp - 1]);
+}
+
+static void stbiw__write_pixels(stbi__write_context *s, int rgb_dir, int vdir, int x, int y, int comp, void *data, int write_alpha, int scanline_pad, int expand_mono)
+{
+   stbiw_uint32 zero = 0;
+   int i,j, j_end;
+
+   if (y <= 0)
+      return;
+
+   if (stbi__flip_vertically_on_write)
+      vdir *= -1;
+
+   if (vdir < 0) {
+      j_end = -1; j = y-1;
+   } else {
+      j_end = y; j = 0;
+   }
+
+   for (; j != j_end; j += vdir) {
+      for (i=0; i < x; ++i) {
+         unsigned char *d = (unsigned char *) data + (j*x+i)*comp;
+         stbiw__write_pixel(s, rgb_dir, comp, write_alpha, expand_mono, d);
+      }
+      stbiw__write_flush(s);
+      s->func(s->context, &zero, scanline_pad);
+   }
+}
+
+static int stbiw__outfile(stbi__write_context *s, int rgb_dir, int vdir, int x, int y, int comp, int expand_mono, void *data, int alpha, int pad, const char *fmt, ...)
+{
+   if (y < 0 || x < 0) {
+      return 0;
+   } else {
+      va_list v;
+      
+# 484 "C:/cpp/Tensor/stb_image_write.h" 3 4
+     __builtin_va_start(
+# 484 "C:/cpp/Tensor/stb_image_write.h"
+     v
+# 484 "C:/cpp/Tensor/stb_image_write.h" 3 4
+     ,
+# 484 "C:/cpp/Tensor/stb_image_write.h"
+     fmt
+# 484 "C:/cpp/Tensor/stb_image_write.h" 3 4
+     )
+# 484 "C:/cpp/Tensor/stb_image_write.h"
+                     ;
+      stbiw__writefv(s, fmt, v);
+      
+# 486 "C:/cpp/Tensor/stb_image_write.h" 3 4
+     __builtin_va_end(
+# 486 "C:/cpp/Tensor/stb_image_write.h"
+     v
+# 486 "C:/cpp/Tensor/stb_image_write.h" 3 4
+     )
+# 486 "C:/cpp/Tensor/stb_image_write.h"
+              ;
+      stbiw__write_pixels(s,rgb_dir,vdir,x,y,comp,data,alpha,pad, expand_mono);
+      return 1;
+   }
+}
+
+static int stbi_write_bmp_core(stbi__write_context *s, int x, int y, int comp, const void *data)
+{
+   if (comp != 4) {
+
+      int pad = (-x*3) & 3;
+      return stbiw__outfile(s,-1,-1,x,y,comp,1,(void *) data,0,pad,
+              "11 4 22 4" "4 44 22 444444",
+              'B', 'M', 14+40+(x*3+pad)*y, 0,0, 14+40,
+               40, x,y, 1,24, 0,0,0,0,0,0);
+   } else {
+
+
+
+      return stbiw__outfile(s,-1,-1,x,y,comp,1,(void *)data,1,0,
+         "11 4 22 4" "4 44 22 444444 4444 4 444 444 444 444",
+         'B', 'M', 14+108+x*y*4, 0, 0, 14+108,
+         108, x,y, 1,32, 3,0,0,0,0,0, 0xff0000,0xff00,0xff,0xff000000u, 0, 0,0,0, 0,0,0, 0,0,0, 0,0,0);
+   }
+}
+
+extern "C" int stbi_write_bmp_to_func(stbi_write_func *func, void *context, int x, int y, int comp, const void *data)
+{
+   stbi__write_context s = { 0 };
+   stbi__start_write_callbacks(&s, func, context);
+   return stbi_write_bmp_core(&s, x, y, comp, data);
+}
+
+
+extern "C" int stbi_write_bmp(char const *filename, int x, int y, int comp, const void *data)
+{
+   stbi__write_context s = { 0 };
+   if (stbi__start_write_file(&s,filename)) {
+      int r = stbi_write_bmp_core(&s, x, y, comp, data);
+      stbi__end_write_file(&s);
+      return r;
+   } else
+      return 0;
+}
+
+
+static int stbi_write_tga_core(stbi__write_context *s, int x, int y, int comp, void *data)
+{
+   int has_alpha = (comp == 2 || comp == 4);
+   int colorbytes = has_alpha ? comp-1 : comp;
+   int format = colorbytes < 2 ? 3 : 2;
+
+   if (y < 0 || x < 0)
+      return 0;
+
+   if (!stbi_write_tga_with_rle) {
+      return stbiw__outfile(s, -1, -1, x, y, comp, 0, (void *) data, has_alpha, 0,
+         "111 221 2222 11", 0, 0, format, 0, 0, 0, 0, 0, x, y, (colorbytes + has_alpha) * 8, has_alpha * 8);
+   } else {
+      int i,j,k;
+      int jend, jdir;
+
+      stbiw__writef(s, "111 221 2222 11", 0,0,format+8, 0,0,0, 0,0,x,y, (colorbytes + has_alpha) * 8, has_alpha * 8);
+
+      if (stbi__flip_vertically_on_write) {
+         j = 0;
+         jend = y;
+         jdir = 1;
+      } else {
+         j = y-1;
+         jend = -1;
+         jdir = -1;
+      }
+      for (; j != jend; j += jdir) {
+         unsigned char *row = (unsigned char *) data + j * x * comp;
+         int len;
+
+         for (i = 0; i < x; i += len) {
+            unsigned char *begin = row + i * comp;
+            int diff = 1;
+            len = 1;
+
+            if (i < x - 1) {
+               ++len;
+               diff = memcmp(begin, row + (i + 1) * comp, comp);
+               if (diff) {
+                  const unsigned char *prev = begin;
+                  for (k = i + 2; k < x && len < 128; ++k) {
+                     if (memcmp(prev, row + k * comp, comp)) {
+                        prev += comp;
+                        ++len;
+                     } else {
+                        --len;
+                        break;
+                     }
+                  }
+               } else {
+                  for (k = i + 2; k < x && len < 128; ++k) {
+                     if (!memcmp(begin, row + k * comp, comp)) {
+                        ++len;
+                     } else {
+                        break;
+                     }
+                  }
+               }
+            }
+
+            if (diff) {
+               unsigned char header = (unsigned char) ((len - 1) & 0xff);
+               stbiw__write1(s, header);
+               for (k = 0; k < len; ++k) {
+                  stbiw__write_pixel(s, -1, comp, has_alpha, 0, begin + k * comp);
+               }
+            } else {
+               unsigned char header = (unsigned char) ((len - 129) & 0xff);
+               stbiw__write1(s, header);
+               stbiw__write_pixel(s, -1, comp, has_alpha, 0, begin);
+            }
+         }
+      }
+      stbiw__write_flush(s);
+   }
+   return 1;
+}
+
+extern "C" int stbi_write_tga_to_func(stbi_write_func *func, void *context, int x, int y, int comp, const void *data)
+{
+   stbi__write_context s = { 0 };
+   stbi__start_write_callbacks(&s, func, context);
+   return stbi_write_tga_core(&s, x, y, comp, (void *) data);
+}
+
+
+extern "C" int stbi_write_tga(char const *filename, int x, int y, int comp, const void *data)
+{
+   stbi__write_context s = { 0 };
+   if (stbi__start_write_file(&s,filename)) {
+      int r = stbi_write_tga_core(&s, x, y, comp, (void *) data);
+      stbi__end_write_file(&s);
+      return r;
+   } else
+      return 0;
+}
+# 639 "C:/cpp/Tensor/stb_image_write.h"
+static void stbiw__linear_to_rgbe(unsigned char *rgbe, float *linear)
+{
+   int exponent;
+   float maxcomp = ((linear[0]) > (((linear[1]) > (linear[2]) ? (linear[1]) : (linear[2]))) ? (linear[0]) : (((linear[1]) > (linear[2]) ? (linear[1]) : (linear[2]))));
+
+   if (maxcomp < 1e-32f) {
+      rgbe[0] = rgbe[1] = rgbe[2] = rgbe[3] = 0;
+   } else {
+      float normalize = (float) frexp(maxcomp, &exponent) * 256.0f/maxcomp;
+
+      rgbe[0] = (unsigned char)(linear[0] * normalize);
+      rgbe[1] = (unsigned char)(linear[1] * normalize);
+      rgbe[2] = (unsigned char)(linear[2] * normalize);
+      rgbe[3] = (unsigned char)(exponent + 128);
+   }
+}
+
+static void stbiw__write_run_data(stbi__write_context *s, int length, unsigned char databyte)
+{
+   unsigned char lengthbyte = (unsigned char) ((length+128) & 0xff);
+   
+# 659 "C:/cpp/Tensor/stb_image_write.h" 3
+  (void) ((!!(
+# 659 "C:/cpp/Tensor/stb_image_write.h"
+  length+128 <= 255
+# 659 "C:/cpp/Tensor/stb_image_write.h" 3
+  )) || (_assert(
+# 659 "C:/cpp/Tensor/stb_image_write.h"
+  "length+128 <= 255"
+# 659 "C:/cpp/Tensor/stb_image_write.h" 3
+  ,"C:/cpp/Tensor/stb_image_write.h",659),0))
+# 659 "C:/cpp/Tensor/stb_image_write.h"
+                                 ;
+   s->func(s->context, &lengthbyte, 1);
+   s->func(s->context, &databyte, 1);
+}
+
+static void stbiw__write_dump_data(stbi__write_context *s, int length, unsigned char *data)
+{
+   unsigned char lengthbyte = (unsigned char) ((length) & 0xff);
+   
+# 667 "C:/cpp/Tensor/stb_image_write.h" 3
+  (void) ((!!(
+# 667 "C:/cpp/Tensor/stb_image_write.h"
+  length <= 128
+# 667 "C:/cpp/Tensor/stb_image_write.h" 3
+  )) || (_assert(
+# 667 "C:/cpp/Tensor/stb_image_write.h"
+  "length <= 128"
+# 667 "C:/cpp/Tensor/stb_image_write.h" 3
+  ,"C:/cpp/Tensor/stb_image_write.h",667),0))
+# 667 "C:/cpp/Tensor/stb_image_write.h"
+                             ;
+   s->func(s->context, &lengthbyte, 1);
+   s->func(s->context, data, length);
+}
+
+static void stbiw__write_hdr_scanline(stbi__write_context *s, int width, int ncomp, unsigned char *scratch, float *scanline)
+{
+   unsigned char scanlineheader[4] = { 2, 2, 0, 0 };
+   unsigned char rgbe[4];
+   float linear[3];
+   int x;
+
+   scanlineheader[2] = (width&0xff00)>>8;
+   scanlineheader[3] = (width&0x00ff);
+
+
+   if (width < 8 || width >= 32768) {
+      for (x=0; x < width; x++) {
+         switch (ncomp) {
+            case 4:
+            case 3: linear[2] = scanline[x*ncomp + 2];
+                    linear[1] = scanline[x*ncomp + 1];
+                    linear[0] = scanline[x*ncomp + 0];
+                    break;
+            default:
+                    linear[0] = linear[1] = linear[2] = scanline[x*ncomp + 0];
+                    break;
+         }
+         stbiw__linear_to_rgbe(rgbe, linear);
+         s->func(s->context, rgbe, 4);
+      }
+   } else {
+      int c,r;
+
+      for (x=0; x < width; x++) {
+         switch(ncomp) {
+            case 4:
+            case 3: linear[2] = scanline[x*ncomp + 2];
+                    linear[1] = scanline[x*ncomp + 1];
+                    linear[0] = scanline[x*ncomp + 0];
+                    break;
+            default:
+                    linear[0] = linear[1] = linear[2] = scanline[x*ncomp + 0];
+                    break;
+         }
+         stbiw__linear_to_rgbe(rgbe, linear);
+         scratch[x + width*0] = rgbe[0];
+         scratch[x + width*1] = rgbe[1];
+         scratch[x + width*2] = rgbe[2];
+         scratch[x + width*3] = rgbe[3];
+      }
+
+      s->func(s->context, scanlineheader, 4);
+
+
+      for (c=0; c < 4; c++) {
+         unsigned char *comp = &scratch[width*c];
+
+         x = 0;
+         while (x < width) {
+
+            r = x;
+            while (r+2 < width) {
+               if (comp[r] == comp[r+1] && comp[r] == comp[r+2])
+                  break;
+               ++r;
+            }
+            if (r+2 >= width)
+               r = width;
+
+            while (x < r) {
+               int len = r-x;
+               if (len > 128) len = 128;
+               stbiw__write_dump_data(s, len, &comp[x]);
+               x += len;
+            }
+
+            if (r+2 < width) {
+
+               while (r < width && comp[r] == comp[x])
+                  ++r;
+
+               while (x < r) {
+                  int len = r-x;
+                  if (len > 127) len = 127;
+                  stbiw__write_run_data(s, len, comp[x]);
+                  x += len;
+               }
+            }
+         }
+      }
+   }
+}
+
+static int stbi_write_hdr_core(stbi__write_context *s, int x, int y, int comp, float *data)
+{
+   if (y <= 0 || x <= 0 || data == 
+# 763 "C:/cpp/Tensor/stb_image_write.h" 3 4
+                                  __null
+# 763 "C:/cpp/Tensor/stb_image_write.h"
+                                      )
+      return 0;
+   else {
+
+      unsigned char *scratch = (unsigned char *) malloc(x*4);
+      int i, len;
+      char buffer[128];
+      char header[] = "#?RADIANCE\n# Written by stb_image_write.h\nFORMAT=32-bit_rle_rgbe\n";
+      s->func(s->context, header, sizeof(header)-1);
+
+
+
+
+      len = sprintf(buffer, "EXPOSURE=          1.0000000000000\n\n-Y %d +X %d\n", y, x);
+
+      s->func(s->context, buffer, len);
+
+      for(i=0; i < y; i++)
+         stbiw__write_hdr_scanline(s, x, comp, scratch, data + comp*x*(stbi__flip_vertically_on_write ? y-1-i : i));
+      free(scratch);
+      return 1;
+   }
+}
+
+extern "C" int stbi_write_hdr_to_func(stbi_write_func *func, void *context, int x, int y, int comp, const float *data)
+{
+   stbi__write_context s = { 0 };
+   stbi__start_write_callbacks(&s, func, context);
+   return stbi_write_hdr_core(&s, x, y, comp, (float *) data);
+}
+
+extern "C" int stbi_write_hdr(char const *filename, int x, int y, int comp, const float *data)
+{
+   stbi__write_context s = { 0 };
+   if (stbi__start_write_file(&s,filename)) {
+      int r = stbi_write_hdr_core(&s, x, y, comp, (float *) data);
+      stbi__end_write_file(&s);
+      return r;
+   } else
+      return 0;
+}
+# 826 "C:/cpp/Tensor/stb_image_write.h"
+static void *stbiw__sbgrowf(void **arr, int increment, int itemsize)
+{
+   int m = *arr ? 2*((int *) (void *) (*arr) - 2)[0]+increment : increment+1;
+   void *p = realloc(*arr ? ((int *) (void *) (*arr) - 2) : 0,itemsize * m + sizeof(int)*2);
+   
+# 830 "C:/cpp/Tensor/stb_image_write.h" 3
+  (void) ((!!(
+# 830 "C:/cpp/Tensor/stb_image_write.h"
+  p
+# 830 "C:/cpp/Tensor/stb_image_write.h" 3
+  )) || (_assert(
+# 830 "C:/cpp/Tensor/stb_image_write.h"
+  "p"
+# 830 "C:/cpp/Tensor/stb_image_write.h" 3
+  ,"C:/cpp/Tensor/stb_image_write.h",830),0))
+# 830 "C:/cpp/Tensor/stb_image_write.h"
+                 ;
+   if (p) {
+      if (!*arr) ((int *) p)[1] = 0;
+      *arr = (void *) ((int *) p + 2);
+      ((int *) (void *) (*arr) - 2)[0] = m;
+   }
+   return *arr;
+}
+
+static unsigned char *stbiw__zlib_flushf(unsigned char *data, unsigned int *bitbuffer, int *bitcount)
+{
+   while (*bitcount >= 8) {
+      ((((data)==0 || ((int *) (void *) (data) - 2)[1]+(1) >= ((int *) (void *) (data) - 2)[0]) ? stbiw__sbgrowf((void **) &(data), (1), sizeof(*(data))) : 0), (data)[((int *) (void *) (data) - 2)[1]++] = ((unsigned char) ((*bitbuffer) & 0xff)));
+      *bitbuffer >>= 8;
+      *bitcount -= 8;
+   }
+   return data;
+}
+
+static int stbiw__zlib_bitrev(int code, int codebits)
+{
+   int res=0;
+   while (codebits--) {
+      res = (res << 1) | (code & 1);
+      code >>= 1;
+   }
+   return res;
+}
+
+static unsigned int stbiw__zlib_countm(unsigned char *a, unsigned char *b, int limit)
+{
+   int i;
+   for (i=0; i < limit && i < 258; ++i)
+      if (a[i] != b[i]) break;
+   return i;
+}
+
+static unsigned int stbiw__zhash(unsigned char *data)
+{
+   stbiw_uint32 hash = data[0] + (data[1] << 8) + (data[2] << 16);
+   hash ^= hash << 3;
+   hash += hash >> 5;
+   hash ^= hash << 4;
+   hash += hash >> 17;
+   hash ^= hash << 25;
+   hash += hash >> 6;
+   return hash;
+}
+# 895 "C:/cpp/Tensor/stb_image_write.h"
+extern "C" unsigned char * stbi_zlib_compress(unsigned char *data, int data_len, int *out_len, int quality)
+{
+
+
+
+
+   static unsigned short lengthc[] = { 3,4,5,6,7,8,9,10,11,13,15,17,19,23,27,31,35,43,51,59,67,83,99,115,131,163,195,227,258, 259 };
+   static unsigned char lengtheb[]= { 0,0,0,0,0,0,0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0 };
+   static unsigned short distc[] = { 1,2,3,4,5,7,9,13,17,25,33,49,65,97,129,193,257,385,513,769,1025,1537,2049,3073,4097,6145,8193,12289,16385,24577, 32768 };
+   static unsigned char disteb[] = { 0,0,0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13 };
+   unsigned int bitbuf=0;
+   int i,j, bitcount=0;
+   unsigned char *out = 
+# 907 "C:/cpp/Tensor/stb_image_write.h" 3 4
+                       __null
+# 907 "C:/cpp/Tensor/stb_image_write.h"
+                           ;
+   unsigned char ***hash_table = (unsigned char***) malloc(16384 * sizeof(unsigned char**));
+   if (hash_table == 
+# 909 "C:/cpp/Tensor/stb_image_write.h" 3 4
+                    __null
+# 909 "C:/cpp/Tensor/stb_image_write.h"
+                        )
+      return 
+# 910 "C:/cpp/Tensor/stb_image_write.h" 3 4
+            __null
+# 910 "C:/cpp/Tensor/stb_image_write.h"
+                ;
+   if (quality < 5) quality = 5;
+
+   ((((out)==0 || ((int *) (void *) (out) - 2)[1]+(1) >= ((int *) (void *) (out) - 2)[0]) ? stbiw__sbgrowf((void **) &(out), (1), sizeof(*(out))) : 0), (out)[((int *) (void *) (out) - 2)[1]++] = (0x78));
+   ((((out)==0 || ((int *) (void *) (out) - 2)[1]+(1) >= ((int *) (void *) (out) - 2)[0]) ? stbiw__sbgrowf((void **) &(out), (1), sizeof(*(out))) : 0), (out)[((int *) (void *) (out) - 2)[1]++] = (0x5e));
+   (bitbuf |= (1) << bitcount, bitcount += (1), (out = stbiw__zlib_flushf(out, &bitbuf, &bitcount)));
+   (bitbuf |= (1) << bitcount, bitcount += (2), (out = stbiw__zlib_flushf(out, &bitbuf, &bitcount)));
+
+   for (i=0; i < 16384; ++i)
+      hash_table[i] = 
+# 919 "C:/cpp/Tensor/stb_image_write.h" 3 4
+                     __null
+# 919 "C:/cpp/Tensor/stb_image_write.h"
+                         ;
+
+   i=0;
+   while (i < data_len-3) {
+
+      int h = stbiw__zhash(data+i)&(16384 -1), best=3;
+      unsigned char *bestloc = 0;
+      unsigned char **hlist = hash_table[h];
+      int n = ((hlist) ? ((int *) (void *) (hlist) - 2)[1] : 0);
+      for (j=0; j < n; ++j) {
+         if (hlist[j]-data > i-32768) {
+            int d = stbiw__zlib_countm(hlist[j], data+i, data_len-i);
+            if (d >= best) { best=d; bestloc=hlist[j]; }
+         }
+      }
+
+      if (hash_table[h] && ((int *) (void *) (hash_table[h]) - 2)[1] == 2*quality) {
+         memmove(hash_table[h],hash_table[h]+quality,sizeof(hash_table[h][0])*quality);
+         ((int *) (void *) (hash_table[h]) - 2)[1] = quality;
+      }
+      ((((hash_table[h])==0 || ((int *) (void *) (hash_table[h]) - 2)[1]+(1) >= ((int *) (void *) (hash_table[h]) - 2)[0]) ? stbiw__sbgrowf((void **) &(hash_table[h]), (1), sizeof(*(hash_table[h]))) : 0), (hash_table[h])[((int *) (void *) (hash_table[h]) - 2)[1]++] = (data+i));
+
+      if (bestloc) {
+
+         h = stbiw__zhash(data+i+1)&(16384 -1);
+         hlist = hash_table[h];
+         n = ((hlist) ? ((int *) (void *) (hlist) - 2)[1] : 0);
+         for (j=0; j < n; ++j) {
+            if (hlist[j]-data > i-32767) {
+               int e = stbiw__zlib_countm(hlist[j], data+i+1, data_len-i-1);
+               if (e > best) {
+                  bestloc = 
+# 950 "C:/cpp/Tensor/stb_image_write.h" 3 4
+                           __null
+# 950 "C:/cpp/Tensor/stb_image_write.h"
+                               ;
+                  break;
+               }
+            }
+         }
+      }
+
+      if (bestloc) {
+         int d = (int) (data+i - bestloc);
+         
+# 959 "C:/cpp/Tensor/stb_image_write.h" 3
+        (void) ((!!(
+# 959 "C:/cpp/Tensor/stb_image_write.h"
+        d <= 32767 && best <= 258
+# 959 "C:/cpp/Tensor/stb_image_write.h" 3
+        )) || (_assert(
+# 959 "C:/cpp/Tensor/stb_image_write.h"
+        "d <= 32767 && best <= 258"
+# 959 "C:/cpp/Tensor/stb_image_write.h" 3
+        ,"C:/cpp/Tensor/stb_image_write.h",959),0))
+# 959 "C:/cpp/Tensor/stb_image_write.h"
+                                               ;
+         for (j=0; best > lengthc[j+1]-1; ++j);
+         ((j+257) <= 143 ? (bitbuf |= (stbiw__zlib_bitrev(0x30 + (j+257),8)) << bitcount, bitcount += (8), (out = stbiw__zlib_flushf(out, &bitbuf, &bitcount))) : (j+257) <= 255 ? (bitbuf |= (stbiw__zlib_bitrev(0x190 + (j+257)-144,9)) << bitcount, bitcount += (9), (out = stbiw__zlib_flushf(out, &bitbuf, &bitcount))) : (j+257) <= 279 ? (bitbuf |= (stbiw__zlib_bitrev(0 + (j+257)-256,7)) << bitcount, bitcount += (7), (out = stbiw__zlib_flushf(out, &bitbuf, &bitcount))) : (bitbuf |= (stbiw__zlib_bitrev(0xc0 + (j+257)-280,8)) << bitcount, bitcount += (8), (out = stbiw__zlib_flushf(out, &bitbuf, &bitcount))));
+         if (lengtheb[j]) (bitbuf |= (best - lengthc[j]) << bitcount, bitcount += (lengtheb[j]), (out = stbiw__zlib_flushf(out, &bitbuf, &bitcount)));
+         for (j=0; d > distc[j+1]-1; ++j);
+         (bitbuf |= (stbiw__zlib_bitrev(j,5)) << bitcount, bitcount += (5), (out = stbiw__zlib_flushf(out, &bitbuf, &bitcount)));
+         if (disteb[j]) (bitbuf |= (d - distc[j]) << bitcount, bitcount += (disteb[j]), (out = stbiw__zlib_flushf(out, &bitbuf, &bitcount)));
+         i += best;
+      } else {
+         ((data[i]) <= 143 ? (bitbuf |= (stbiw__zlib_bitrev(0x30 + (data[i]),8)) << bitcount, bitcount += (8), (out = stbiw__zlib_flushf(out, &bitbuf, &bitcount))) : (bitbuf |= (stbiw__zlib_bitrev(0x190 + (data[i])-144,9)) << bitcount, bitcount += (9), (out = stbiw__zlib_flushf(out, &bitbuf, &bitcount))));
+         ++i;
+      }
+   }
+
+   for (;i < data_len; ++i)
+      ((data[i]) <= 143 ? (bitbuf |= (stbiw__zlib_bitrev(0x30 + (data[i]),8)) << bitcount, bitcount += (8), (out = stbiw__zlib_flushf(out, &bitbuf, &bitcount))) : (bitbuf |= (stbiw__zlib_bitrev(0x190 + (data[i])-144,9)) << bitcount, bitcount += (9), (out = stbiw__zlib_flushf(out, &bitbuf, &bitcount))));
+   ((256) <= 143 ? (bitbuf |= (stbiw__zlib_bitrev(0x30 + (256),8)) << bitcount, bitcount += (8), (out = stbiw__zlib_flushf(out, &bitbuf, &bitcount))) : (256) <= 255 ? (bitbuf |= (stbiw__zlib_bitrev(0x190 + (256)-144,9)) << bitcount, bitcount += (9), (out = stbiw__zlib_flushf(out, &bitbuf, &bitcount))) : (256) <= 279 ? (bitbuf |= (stbiw__zlib_bitrev(0 + (256)-256,7)) << bitcount, bitcount += (7), (out = stbiw__zlib_flushf(out, &bitbuf, &bitcount))) : (bitbuf |= (stbiw__zlib_bitrev(0xc0 + (256)-280,8)) << bitcount, bitcount += (8), (out = stbiw__zlib_flushf(out, &bitbuf, &bitcount))));
+
+   while (bitcount)
+      (bitbuf |= (0) << bitcount, bitcount += (1), (out = stbiw__zlib_flushf(out, &bitbuf, &bitcount)));
+
+   for (i=0; i < 16384; ++i)
+      (void) ((hash_table[i]) ? free(((int *) (void *) (hash_table[i]) - 2)),0 : 0);
+   free(hash_table);
+
+
+   if (((int *) (void *) (out) - 2)[1] > data_len + 2 + ((data_len+32766)/32767)*5) {
+      ((int *) (void *) (out) - 2)[1] = 2;
+      for (j = 0; j < data_len;) {
+         int blocklen = data_len - j;
+         if (blocklen > 32767) blocklen = 32767;
+         ((((out)==0 || ((int *) (void *) (out) - 2)[1]+(1) >= ((int *) (void *) (out) - 2)[0]) ? stbiw__sbgrowf((void **) &(out), (1), sizeof(*(out))) : 0), (out)[((int *) (void *) (out) - 2)[1]++] = (data_len - j == blocklen));
+         ((((out)==0 || ((int *) (void *) (out) - 2)[1]+(1) >= ((int *) (void *) (out) - 2)[0]) ? stbiw__sbgrowf((void **) &(out), (1), sizeof(*(out))) : 0), (out)[((int *) (void *) (out) - 2)[1]++] = ((unsigned char) ((blocklen) & 0xff)));
+         ((((out)==0 || ((int *) (void *) (out) - 2)[1]+(1) >= ((int *) (void *) (out) - 2)[0]) ? stbiw__sbgrowf((void **) &(out), (1), sizeof(*(out))) : 0), (out)[((int *) (void *) (out) - 2)[1]++] = ((unsigned char) ((blocklen >> 8) & 0xff)));
+         ((((out)==0 || ((int *) (void *) (out) - 2)[1]+(1) >= ((int *) (void *) (out) - 2)[0]) ? stbiw__sbgrowf((void **) &(out), (1), sizeof(*(out))) : 0), (out)[((int *) (void *) (out) - 2)[1]++] = ((unsigned char) ((~blocklen) & 0xff)));
+         ((((out)==0 || ((int *) (void *) (out) - 2)[1]+(1) >= ((int *) (void *) (out) - 2)[0]) ? stbiw__sbgrowf((void **) &(out), (1), sizeof(*(out))) : 0), (out)[((int *) (void *) (out) - 2)[1]++] = ((unsigned char) ((~blocklen >> 8) & 0xff)));
+         memcpy(out+((int *) (void *) (out) - 2)[1], data+j, blocklen);
+         ((int *) (void *) (out) - 2)[1] += blocklen;
+         j += blocklen;
+      }
+   }
+
+   {
+
+      unsigned int s1=1, s2=0;
+      int blocklen = (int) (data_len % 5552);
+      j=0;
+      while (j < data_len) {
+         for (i=0; i < blocklen; ++i) { s1 += data[j+i]; s2 += s1; }
+         s1 %= 65521; s2 %= 65521;
+         j += blocklen;
+         blocklen = 5552;
+      }
+      ((((out)==0 || ((int *) (void *) (out) - 2)[1]+(1) >= ((int *) (void *) (out) - 2)[0]) ? stbiw__sbgrowf((void **) &(out), (1), sizeof(*(out))) : 0), (out)[((int *) (void *) (out) - 2)[1]++] = ((unsigned char) ((s2 >> 8) & 0xff)));
+      ((((out)==0 || ((int *) (void *) (out) - 2)[1]+(1) >= ((int *) (void *) (out) - 2)[0]) ? stbiw__sbgrowf((void **) &(out), (1), sizeof(*(out))) : 0), (out)[((int *) (void *) (out) - 2)[1]++] = ((unsigned char) ((s2) & 0xff)));
+      ((((out)==0 || ((int *) (void *) (out) - 2)[1]+(1) >= ((int *) (void *) (out) - 2)[0]) ? stbiw__sbgrowf((void **) &(out), (1), sizeof(*(out))) : 0), (out)[((int *) (void *) (out) - 2)[1]++] = ((unsigned char) ((s1 >> 8) & 0xff)));
+      ((((out)==0 || ((int *) (void *) (out) - 2)[1]+(1) >= ((int *) (void *) (out) - 2)[0]) ? stbiw__sbgrowf((void **) &(out), (1), sizeof(*(out))) : 0), (out)[((int *) (void *) (out) - 2)[1]++] = ((unsigned char) ((s1) & 0xff)));
+   }
+   *out_len = ((int *) (void *) (out) - 2)[1];
+
+   memmove(((int *) (void *) (out) - 2),out,*out_len);
+   return (unsigned char *) ((int *) (void *) (out) - 2);
+
+}
+
+static unsigned int stbiw__crc32(unsigned char *buffer, int len)
+{
+
+
+
+   static unsigned int crc_table[256] =
+   {
+      0x00000000, 0x77073096, 0xEE0E612C, 0x990951BA, 0x076DC419, 0x706AF48F, 0xE963A535, 0x9E6495A3,
+      0x0eDB8832, 0x79DCB8A4, 0xE0D5E91E, 0x97D2D988, 0x09B64C2B, 0x7EB17CBD, 0xE7B82D07, 0x90BF1D91,
+      0x1DB71064, 0x6AB020F2, 0xF3B97148, 0x84BE41DE, 0x1ADAD47D, 0x6DDDE4EB, 0xF4D4B551, 0x83D385C7,
+      0x136C9856, 0x646BA8C0, 0xFD62F97A, 0x8A65C9EC, 0x14015C4F, 0x63066CD9, 0xFA0F3D63, 0x8D080DF5,
+      0x3B6E20C8, 0x4C69105E, 0xD56041E4, 0xA2677172, 0x3C03E4D1, 0x4B04D447, 0xD20D85FD, 0xA50AB56B,
+      0x35B5A8FA, 0x42B2986C, 0xDBBBC9D6, 0xACBCF940, 0x32D86CE3, 0x45DF5C75, 0xDCD60DCF, 0xABD13D59,
+      0x26D930AC, 0x51DE003A, 0xC8D75180, 0xBFD06116, 0x21B4F4B5, 0x56B3C423, 0xCFBA9599, 0xB8BDA50F,
+      0x2802B89E, 0x5F058808, 0xC60CD9B2, 0xB10BE924, 0x2F6F7C87, 0x58684C11, 0xC1611DAB, 0xB6662D3D,
+      0x76DC4190, 0x01DB7106, 0x98D220BC, 0xEFD5102A, 0x71B18589, 0x06B6B51F, 0x9FBFE4A5, 0xE8B8D433,
+      0x7807C9A2, 0x0F00F934, 0x9609A88E, 0xE10E9818, 0x7F6A0DBB, 0x086D3D2D, 0x91646C97, 0xE6635C01,
+      0x6B6B51F4, 0x1C6C6162, 0x856530D8, 0xF262004E, 0x6C0695ED, 0x1B01A57B, 0x8208F4C1, 0xF50FC457,
+      0x65B0D9C6, 0x12B7E950, 0x8BBEB8EA, 0xFCB9887C, 0x62DD1DDF, 0x15DA2D49, 0x8CD37CF3, 0xFBD44C65,
+      0x4DB26158, 0x3AB551CE, 0xA3BC0074, 0xD4BB30E2, 0x4ADFA541, 0x3DD895D7, 0xA4D1C46D, 0xD3D6F4FB,
+      0x4369E96A, 0x346ED9FC, 0xAD678846, 0xDA60B8D0, 0x44042D73, 0x33031DE5, 0xAA0A4C5F, 0xDD0D7CC9,
+      0x5005713C, 0x270241AA, 0xBE0B1010, 0xC90C2086, 0x5768B525, 0x206F85B3, 0xB966D409, 0xCE61E49F,
+      0x5EDEF90E, 0x29D9C998, 0xB0D09822, 0xC7D7A8B4, 0x59B33D17, 0x2EB40D81, 0xB7BD5C3B, 0xC0BA6CAD,
+      0xEDB88320, 0x9ABFB3B6, 0x03B6E20C, 0x74B1D29A, 0xEAD54739, 0x9DD277AF, 0x04DB2615, 0x73DC1683,
+      0xE3630B12, 0x94643B84, 0x0D6D6A3E, 0x7A6A5AA8, 0xE40ECF0B, 0x9309FF9D, 0x0A00AE27, 0x7D079EB1,
+      0xF00F9344, 0x8708A3D2, 0x1E01F268, 0x6906C2FE, 0xF762575D, 0x806567CB, 0x196C3671, 0x6E6B06E7,
+      0xFED41B76, 0x89D32BE0, 0x10DA7A5A, 0x67DD4ACC, 0xF9B9DF6F, 0x8EBEEFF9, 0x17B7BE43, 0x60B08ED5,
+      0xD6D6A3E8, 0xA1D1937E, 0x38D8C2C4, 0x4FDFF252, 0xD1BB67F1, 0xA6BC5767, 0x3FB506DD, 0x48B2364B,
+      0xD80D2BDA, 0xAF0A1B4C, 0x36034AF6, 0x41047A60, 0xDF60EFC3, 0xA867DF55, 0x316E8EEF, 0x4669BE79,
+      0xCB61B38C, 0xBC66831A, 0x256FD2A0, 0x5268E236, 0xCC0C7795, 0xBB0B4703, 0x220216B9, 0x5505262F,
+      0xC5BA3BBE, 0xB2BD0B28, 0x2BB45A92, 0x5CB36A04, 0xC2D7FFA7, 0xB5D0CF31, 0x2CD99E8B, 0x5BDEAE1D,
+      0x9B64C2B0, 0xEC63F226, 0x756AA39C, 0x026D930A, 0x9C0906A9, 0xEB0E363F, 0x72076785, 0x05005713,
+      0x95BF4A82, 0xE2B87A14, 0x7BB12BAE, 0x0CB61B38, 0x92D28E9B, 0xE5D5BE0D, 0x7CDCEFB7, 0x0BDBDF21,
+      0x86D3D2D4, 0xF1D4E242, 0x68DDB3F8, 0x1FDA836E, 0x81BE16CD, 0xF6B9265B, 0x6FB077E1, 0x18B74777,
+      0x88085AE6, 0xFF0F6A70, 0x66063BCA, 0x11010B5C, 0x8F659EFF, 0xF862AE69, 0x616BFFD3, 0x166CCF45,
+      0xA00AE278, 0xD70DD2EE, 0x4E048354, 0x3903B3C2, 0xA7672661, 0xD06016F7, 0x4969474D, 0x3E6E77DB,
+      0xAED16A4A, 0xD9D65ADC, 0x40DF0B66, 0x37D83BF0, 0xA9BCAE53, 0xDEBB9EC5, 0x47B2CF7F, 0x30B5FFE9,
+      0xBDBDF21C, 0xCABAC28A, 0x53B39330, 0x24B4A3A6, 0xBAD03605, 0xCDD70693, 0x54DE5729, 0x23D967BF,
+      0xB3667A2E, 0xC4614AB8, 0x5D681B02, 0x2A6F2B94, 0xB40BBE37, 0xC30C8EA1, 0x5A05DF1B, 0x2D02EF8D
+   };
+
+   unsigned int crc = ~0u;
+   int i;
+   for (i=0; i < len; ++i)
+      crc = (crc >> 8) ^ crc_table[buffer[i] ^ (crc & 0xff)];
+   return ~crc;
+
+}
+
+
+
+
+
+static void stbiw__wpcrc(unsigned char **data, int len)
+{
+   unsigned int crc = stbiw__crc32(*data - len - 4, len+4);
+   ((*data)[0]=(unsigned char) (((crc)>>24) & 0xff),(*data)[1]=(unsigned char) (((crc)>>16) & 0xff),(*data)[2]=(unsigned char) (((crc)>>8) & 0xff),(*data)[3]=(unsigned char) (((crc)) & 0xff),(*data)+=4);;
+}
+
+static unsigned char stbiw__paeth(int a, int b, int c)
+{
+   int p = a + b - c, pa = abs(p-a), pb = abs(p-b), pc = abs(p-c);
+   if (pa <= pb && pa <= pc) return (unsigned char) ((a) & 0xff);
+   if (pb <= pc) return (unsigned char) ((b) & 0xff);
+   return (unsigned char) ((c) & 0xff);
+}
+
+
+static void stbiw__encode_png_line(unsigned char *pixels, int stride_bytes, int width, int height, int y, int n, int filter_type, signed char *line_buffer)
+{
+   static int mapping[] = { 0,1,2,3,4 };
+   static int firstmap[] = { 0,1,0,5,6 };
+   int *mymap = (y != 0) ? mapping : firstmap;
+   int i;
+   int type = mymap[filter_type];
+   unsigned char *z = pixels + stride_bytes * (stbi__flip_vertically_on_write ? height-1-y : y);
+   int signed_stride = stbi__flip_vertically_on_write ? -stride_bytes : stride_bytes;
+
+   if (type==0) {
+      memcpy(line_buffer, z, width*n);
+      return;
+   }
+
+
+   for (i = 0; i < n; ++i) {
+      switch (type) {
+         case 1: line_buffer[i] = z[i]; break;
+         case 2: line_buffer[i] = z[i] - z[i-signed_stride]; break;
+         case 3: line_buffer[i] = z[i] - (z[i-signed_stride]>>1); break;
+         case 4: line_buffer[i] = (signed char) (z[i] - stbiw__paeth(0,z[i-signed_stride],0)); break;
+         case 5: line_buffer[i] = z[i]; break;
+         case 6: line_buffer[i] = z[i]; break;
+      }
+   }
+   switch (type) {
+      case 1: for (i=n; i < width*n; ++i) line_buffer[i] = z[i] - z[i-n]; break;
+      case 2: for (i=n; i < width*n; ++i) line_buffer[i] = z[i] - z[i-signed_stride]; break;
+      case 3: for (i=n; i < width*n; ++i) line_buffer[i] = z[i] - ((z[i-n] + z[i-signed_stride])>>1); break;
+      case 4: for (i=n; i < width*n; ++i) line_buffer[i] = z[i] - stbiw__paeth(z[i-n], z[i-signed_stride], z[i-signed_stride-n]); break;
+      case 5: for (i=n; i < width*n; ++i) line_buffer[i] = z[i] - (z[i-n]>>1); break;
+      case 6: for (i=n; i < width*n; ++i) line_buffer[i] = z[i] - stbiw__paeth(z[i-n], 0,0); break;
+   }
+}
+
+extern "C" unsigned char *stbi_write_png_to_mem(const unsigned char *pixels, int stride_bytes, int x, int y, int n, int *out_len)
+{
+   int force_filter = stbi_write_force_png_filter;
+   int ctype[5] = { -1, 0, 4, 2, 6 };
+   unsigned char sig[8] = { 137,80,78,71,13,10,26,10 };
+   unsigned char *out,*o, *filt, *zlib;
+   signed char *line_buffer;
+   int j,zlen;
+
+   if (stride_bytes == 0)
+      stride_bytes = x * n;
+
+   if (force_filter >= 5) {
+      force_filter = -1;
+   }
+
+   filt = (unsigned char *) malloc((x*n+1) * y); if (!filt) return 0;
+   line_buffer = (signed char *) malloc(x * n); if (!line_buffer) { free(filt); return 0; }
+   for (j=0; j < y; ++j) {
+      int filter_type;
+      if (force_filter > -1) {
+         filter_type = force_filter;
+         stbiw__encode_png_line((unsigned char*)(pixels), stride_bytes, x, y, j, n, force_filter, line_buffer);
+      } else {
+         int best_filter = 0, best_filter_val = 0x7fffffff, est, i;
+         for (filter_type = 0; filter_type < 5; filter_type++) {
+            stbiw__encode_png_line((unsigned char*)(pixels), stride_bytes, x, y, j, n, filter_type, line_buffer);
+
+
+            est = 0;
+            for (i = 0; i < x*n; ++i) {
+               est += abs((signed char) line_buffer[i]);
+            }
+            if (est < best_filter_val) {
+               best_filter_val = est;
+               best_filter = filter_type;
+            }
+         }
+         if (filter_type != best_filter) {
+            stbiw__encode_png_line((unsigned char*)(pixels), stride_bytes, x, y, j, n, best_filter, line_buffer);
+            filter_type = best_filter;
+         }
+      }
+
+      filt[j*(x*n+1)] = (unsigned char) filter_type;
+      memmove(filt+j*(x*n+1)+1,line_buffer,x*n);
+   }
+   free(line_buffer);
+   zlib = stbi_zlib_compress(filt, y*( x*n+1), &zlen, stbi_write_png_compression_level);
+   free(filt);
+   if (!zlib) return 0;
+
+
+   out = (unsigned char *) malloc(8 + 12+13 + 12+zlen + 12);
+   if (!out) return 0;
+   *out_len = 8 + 12+13 + 12+zlen + 12;
+
+   o=out;
+   memmove(o,sig,8); o+= 8;
+   ((o)[0]=(unsigned char) (((13)>>24) & 0xff),(o)[1]=(unsigned char) (((13)>>16) & 0xff),(o)[2]=(unsigned char) (((13)>>8) & 0xff),(o)[3]=(unsigned char) (((13)) & 0xff),(o)+=4);;
+   ((o)[0]=(unsigned char) (("IHDR"[0]) & 0xff),(o)[1]=(unsigned char) (("IHDR"[1]) & 0xff),(o)[2]=(unsigned char) (("IHDR"[2]) & 0xff),(o)[3]=(unsigned char) (("IHDR"[3]) & 0xff),(o)+=4);
+   ((o)[0]=(unsigned char) (((x)>>24) & 0xff),(o)[1]=(unsigned char) (((x)>>16) & 0xff),(o)[2]=(unsigned char) (((x)>>8) & 0xff),(o)[3]=(unsigned char) (((x)) & 0xff),(o)+=4);;
+   ((o)[0]=(unsigned char) (((y)>>24) & 0xff),(o)[1]=(unsigned char) (((y)>>16) & 0xff),(o)[2]=(unsigned char) (((y)>>8) & 0xff),(o)[3]=(unsigned char) (((y)) & 0xff),(o)+=4);;
+   *o++ = 8;
+   *o++ = (unsigned char) ((ctype[n]) & 0xff);
+   *o++ = 0;
+   *o++ = 0;
+   *o++ = 0;
+   stbiw__wpcrc(&o,13);
+
+   ((o)[0]=(unsigned char) (((zlen)>>24) & 0xff),(o)[1]=(unsigned char) (((zlen)>>16) & 0xff),(o)[2]=(unsigned char) (((zlen)>>8) & 0xff),(o)[3]=(unsigned char) (((zlen)) & 0xff),(o)+=4);;
+   ((o)[0]=(unsigned char) (("IDAT"[0]) & 0xff),(o)[1]=(unsigned char) (("IDAT"[1]) & 0xff),(o)[2]=(unsigned char) (("IDAT"[2]) & 0xff),(o)[3]=(unsigned char) (("IDAT"[3]) & 0xff),(o)+=4);
+   memmove(o,zlib,zlen);
+   o += zlen;
+   free(zlib);
+   stbiw__wpcrc(&o, zlen);
+
+   ((o)[0]=(unsigned char) (((0)>>24) & 0xff),(o)[1]=(unsigned char) (((0)>>16) & 0xff),(o)[2]=(unsigned char) (((0)>>8) & 0xff),(o)[3]=(unsigned char) (((0)) & 0xff),(o)+=4);;
+   ((o)[0]=(unsigned char) (("IEND"[0]) & 0xff),(o)[1]=(unsigned char) (("IEND"[1]) & 0xff),(o)[2]=(unsigned char) (("IEND"[2]) & 0xff),(o)[3]=(unsigned char) (("IEND"[3]) & 0xff),(o)+=4);
+   stbiw__wpcrc(&o,0);
+
+   
+# 1209 "C:/cpp/Tensor/stb_image_write.h" 3
+  (void) ((!!(
+# 1209 "C:/cpp/Tensor/stb_image_write.h"
+  o == out + *out_len
+# 1209 "C:/cpp/Tensor/stb_image_write.h" 3
+  )) || (_assert(
+# 1209 "C:/cpp/Tensor/stb_image_write.h"
+  "o == out + *out_len"
+# 1209 "C:/cpp/Tensor/stb_image_write.h" 3
+  ,"C:/cpp/Tensor/stb_image_write.h",1209),0))
+# 1209 "C:/cpp/Tensor/stb_image_write.h"
+                                   ;
+
+   return out;
+}
+
+
+extern "C" int stbi_write_png(char const *filename, int x, int y, int comp, const void *data, int stride_bytes)
+{
+   FILE *f;
+   int len;
+   unsigned char *png = stbi_write_png_to_mem((const unsigned char *) data, stride_bytes, x, y, comp, &len);
+   if (png == 
+# 1220 "C:/cpp/Tensor/stb_image_write.h" 3 4
+             __null
+# 1220 "C:/cpp/Tensor/stb_image_write.h"
+                 ) return 0;
+
+   f = stbiw__fopen(filename, "wb");
+   if (!f) { free(png); return 0; }
+   fwrite(png, 1, len, f);
+   fclose(f);
+   free(png);
+   return 1;
+}
+
+
+extern "C" int stbi_write_png_to_func(stbi_write_func *func, void *context, int x, int y, int comp, const void *data, int stride_bytes)
+{
+   int len;
+   unsigned char *png = stbi_write_png_to_mem((const unsigned char *) data, stride_bytes, x, y, comp, &len);
+   if (png == 
+# 1235 "C:/cpp/Tensor/stb_image_write.h" 3 4
+             __null
+# 1235 "C:/cpp/Tensor/stb_image_write.h"
+                 ) return 0;
+   func(context, png, len);
+   free(png);
+   return 1;
+}
+# 1250 "C:/cpp/Tensor/stb_image_write.h"
+static const unsigned char stbiw__jpg_ZigZag[] = { 0,1,5,6,14,15,27,28,2,4,7,13,16,26,29,42,3,8,12,17,25,30,41,43,9,11,18,
+      24,31,40,44,53,10,19,23,32,39,45,52,54,20,22,33,38,46,51,55,60,21,34,37,47,50,56,59,61,35,36,48,49,57,58,62,63 };
+
+static void stbiw__jpg_writeBits(stbi__write_context *s, int *bitBufP, int *bitCntP, const unsigned short *bs) {
+   int bitBuf = *bitBufP, bitCnt = *bitCntP;
+   bitCnt += bs[1];
+   bitBuf |= bs[0] << (24 - bitCnt);
+   while(bitCnt >= 8) {
+      unsigned char c = (bitBuf >> 16) & 255;
+      stbiw__putc(s, c);
+      if(c == 255) {
+         stbiw__putc(s, 0);
+      }
+      bitBuf <<= 8;
+      bitCnt -= 8;
+   }
+   *bitBufP = bitBuf;
+   *bitCntP = bitCnt;
+}
+
+static void stbiw__jpg_DCT(float *d0p, float *d1p, float *d2p, float *d3p, float *d4p, float *d5p, float *d6p, float *d7p) {
+   float d0 = *d0p, d1 = *d1p, d2 = *d2p, d3 = *d3p, d4 = *d4p, d5 = *d5p, d6 = *d6p, d7 = *d7p;
+   float z1, z2, z3, z4, z5, z11, z13;
+
+   float tmp0 = d0 + d7;
+   float tmp7 = d0 - d7;
+   float tmp1 = d1 + d6;
+   float tmp6 = d1 - d6;
+   float tmp2 = d2 + d5;
+   float tmp5 = d2 - d5;
+   float tmp3 = d3 + d4;
+   float tmp4 = d3 - d4;
+
+
+   float tmp10 = tmp0 + tmp3;
+   float tmp13 = tmp0 - tmp3;
+   float tmp11 = tmp1 + tmp2;
+   float tmp12 = tmp1 - tmp2;
+
+   d0 = tmp10 + tmp11;
+   d4 = tmp10 - tmp11;
+
+   z1 = (tmp12 + tmp13) * 0.707106781f;
+   d2 = tmp13 + z1;
+   d6 = tmp13 - z1;
+
+
+   tmp10 = tmp4 + tmp5;
+   tmp11 = tmp5 + tmp6;
+   tmp12 = tmp6 + tmp7;
+
+
+   z5 = (tmp10 - tmp12) * 0.382683433f;
+   z2 = tmp10 * 0.541196100f + z5;
+   z4 = tmp12 * 1.306562965f + z5;
+   z3 = tmp11 * 0.707106781f;
+
+   z11 = tmp7 + z3;
+   z13 = tmp7 - z3;
+
+   *d5p = z13 + z2;
+   *d3p = z13 - z2;
+   *d1p = z11 + z4;
+   *d7p = z11 - z4;
+
+   *d0p = d0; *d2p = d2; *d4p = d4; *d6p = d6;
+}
+
+static void stbiw__jpg_calcBits(int val, unsigned short bits[2]) {
+   int tmp1 = val < 0 ? -val : val;
+   val = val < 0 ? val-1 : val;
+   bits[1] = 1;
+   while(tmp1 >>= 1) {
+      ++bits[1];
+   }
+   bits[0] = val & ((1<<bits[1])-1);
+}
+
+static int stbiw__jpg_processDU(stbi__write_context *s, int *bitBuf, int *bitCnt, float *CDU, int du_stride, float *fdtbl, int DC, const unsigned short HTDC[256][2], const unsigned short HTAC[256][2]) {
+   const unsigned short EOB[2] = { HTAC[0x00][0], HTAC[0x00][1] };
+   const unsigned short M16zeroes[2] = { HTAC[0xF0][0], HTAC[0xF0][1] };
+   int dataOff, i, j, n, diff, end0pos, x, y;
+   int DU[64];
+
+
+   for(dataOff=0, n=du_stride*8; dataOff<n; dataOff+=du_stride) {
+      stbiw__jpg_DCT(&CDU[dataOff], &CDU[dataOff+1], &CDU[dataOff+2], &CDU[dataOff+3], &CDU[dataOff+4], &CDU[dataOff+5], &CDU[dataOff+6], &CDU[dataOff+7]);
+   }
+
+   for(dataOff=0; dataOff<8; ++dataOff) {
+      stbiw__jpg_DCT(&CDU[dataOff], &CDU[dataOff+du_stride], &CDU[dataOff+du_stride*2], &CDU[dataOff+du_stride*3], &CDU[dataOff+du_stride*4],
+                     &CDU[dataOff+du_stride*5], &CDU[dataOff+du_stride*6], &CDU[dataOff+du_stride*7]);
+   }
+
+   for(y = 0, j=0; y < 8; ++y) {
+      for(x = 0; x < 8; ++x,++j) {
+         float v;
+         i = y*du_stride+x;
+         v = CDU[i]*fdtbl[j];
+
+
+         DU[stbiw__jpg_ZigZag[j]] = (int)(v < 0 ? v - 0.5f : v + 0.5f);
+      }
+   }
+
+
+   diff = DU[0] - DC;
+   if (diff == 0) {
+      stbiw__jpg_writeBits(s, bitBuf, bitCnt, HTDC[0]);
+   } else {
+      unsigned short bits[2];
+      stbiw__jpg_calcBits(diff, bits);
+      stbiw__jpg_writeBits(s, bitBuf, bitCnt, HTDC[bits[1]]);
+      stbiw__jpg_writeBits(s, bitBuf, bitCnt, bits);
+   }
+
+   end0pos = 63;
+   for(; (end0pos>0)&&(DU[end0pos]==0); --end0pos) {
+   }
+
+   if(end0pos == 0) {
+      stbiw__jpg_writeBits(s, bitBuf, bitCnt, EOB);
+      return DU[0];
+   }
+   for(i = 1; i <= end0pos; ++i) {
+      int startpos = i;
+      int nrzeroes;
+      unsigned short bits[2];
+      for (; DU[i]==0 && i<=end0pos; ++i) {
+      }
+      nrzeroes = i-startpos;
+      if ( nrzeroes >= 16 ) {
+         int lng = nrzeroes>>4;
+         int nrmarker;
+         for (nrmarker=1; nrmarker <= lng; ++nrmarker)
+            stbiw__jpg_writeBits(s, bitBuf, bitCnt, M16zeroes);
+         nrzeroes &= 15;
+      }
+      stbiw__jpg_calcBits(DU[i], bits);
+      stbiw__jpg_writeBits(s, bitBuf, bitCnt, HTAC[(nrzeroes<<4)+bits[1]]);
+      stbiw__jpg_writeBits(s, bitBuf, bitCnt, bits);
+   }
+   if(end0pos != 63) {
+      stbiw__jpg_writeBits(s, bitBuf, bitCnt, EOB);
+   }
+   return DU[0];
+}
+
+static int stbi_write_jpg_core(stbi__write_context *s, int width, int height, int comp, const void* data, int quality) {
+
+   static const unsigned char std_dc_luminance_nrcodes[] = {0,0,1,5,1,1,1,1,1,1,0,0,0,0,0,0,0};
+   static const unsigned char std_dc_luminance_values[] = {0,1,2,3,4,5,6,7,8,9,10,11};
+   static const unsigned char std_ac_luminance_nrcodes[] = {0,0,2,1,3,3,2,4,3,5,5,4,4,0,0,1,0x7d};
+   static const unsigned char std_ac_luminance_values[] = {
+      0x01,0x02,0x03,0x00,0x04,0x11,0x05,0x12,0x21,0x31,0x41,0x06,0x13,0x51,0x61,0x07,0x22,0x71,0x14,0x32,0x81,0x91,0xa1,0x08,
+      0x23,0x42,0xb1,0xc1,0x15,0x52,0xd1,0xf0,0x24,0x33,0x62,0x72,0x82,0x09,0x0a,0x16,0x17,0x18,0x19,0x1a,0x25,0x26,0x27,0x28,
+      0x29,0x2a,0x34,0x35,0x36,0x37,0x38,0x39,0x3a,0x43,0x44,0x45,0x46,0x47,0x48,0x49,0x4a,0x53,0x54,0x55,0x56,0x57,0x58,0x59,
+      0x5a,0x63,0x64,0x65,0x66,0x67,0x68,0x69,0x6a,0x73,0x74,0x75,0x76,0x77,0x78,0x79,0x7a,0x83,0x84,0x85,0x86,0x87,0x88,0x89,
+      0x8a,0x92,0x93,0x94,0x95,0x96,0x97,0x98,0x99,0x9a,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xb2,0xb3,0xb4,0xb5,0xb6,
+      0xb7,0xb8,0xb9,0xba,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xd2,0xd3,0xd4,0xd5,0xd6,0xd7,0xd8,0xd9,0xda,0xe1,0xe2,
+      0xe3,0xe4,0xe5,0xe6,0xe7,0xe8,0xe9,0xea,0xf1,0xf2,0xf3,0xf4,0xf5,0xf6,0xf7,0xf8,0xf9,0xfa
+   };
+   static const unsigned char std_dc_chrominance_nrcodes[] = {0,0,3,1,1,1,1,1,1,1,1,1,0,0,0,0,0};
+   static const unsigned char std_dc_chrominance_values[] = {0,1,2,3,4,5,6,7,8,9,10,11};
+   static const unsigned char std_ac_chrominance_nrcodes[] = {0,0,2,1,2,4,4,3,4,7,5,4,4,0,1,2,0x77};
+   static const unsigned char std_ac_chrominance_values[] = {
+      0x00,0x01,0x02,0x03,0x11,0x04,0x05,0x21,0x31,0x06,0x12,0x41,0x51,0x07,0x61,0x71,0x13,0x22,0x32,0x81,0x08,0x14,0x42,0x91,
+      0xa1,0xb1,0xc1,0x09,0x23,0x33,0x52,0xf0,0x15,0x62,0x72,0xd1,0x0a,0x16,0x24,0x34,0xe1,0x25,0xf1,0x17,0x18,0x19,0x1a,0x26,
+      0x27,0x28,0x29,0x2a,0x35,0x36,0x37,0x38,0x39,0x3a,0x43,0x44,0x45,0x46,0x47,0x48,0x49,0x4a,0x53,0x54,0x55,0x56,0x57,0x58,
+      0x59,0x5a,0x63,0x64,0x65,0x66,0x67,0x68,0x69,0x6a,0x73,0x74,0x75,0x76,0x77,0x78,0x79,0x7a,0x82,0x83,0x84,0x85,0x86,0x87,
+      0x88,0x89,0x8a,0x92,0x93,0x94,0x95,0x96,0x97,0x98,0x99,0x9a,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xb2,0xb3,0xb4,
+      0xb5,0xb6,0xb7,0xb8,0xb9,0xba,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xd2,0xd3,0xd4,0xd5,0xd6,0xd7,0xd8,0xd9,0xda,
+      0xe2,0xe3,0xe4,0xe5,0xe6,0xe7,0xe8,0xe9,0xea,0xf2,0xf3,0xf4,0xf5,0xf6,0xf7,0xf8,0xf9,0xfa
+   };
+
+   static const unsigned short YDC_HT[256][2] = { {0,2},{2,3},{3,3},{4,3},{5,3},{6,3},{14,4},{30,5},{62,6},{126,7},{254,8},{510,9}};
+   static const unsigned short UVDC_HT[256][2] = { {0,2},{1,2},{2,2},{6,3},{14,4},{30,5},{62,6},{126,7},{254,8},{510,9},{1022,10},{2046,11}};
+   static const unsigned short YAC_HT[256][2] = {
+      {10,4},{0,2},{1,2},{4,3},{11,4},{26,5},{120,7},{248,8},{1014,10},{65410,16},{65411,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {12,4},{27,5},{121,7},{502,9},{2038,11},{65412,16},{65413,16},{65414,16},{65415,16},{65416,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {28,5},{249,8},{1015,10},{4084,12},{65417,16},{65418,16},{65419,16},{65420,16},{65421,16},{65422,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {58,6},{503,9},{4085,12},{65423,16},{65424,16},{65425,16},{65426,16},{65427,16},{65428,16},{65429,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {59,6},{1016,10},{65430,16},{65431,16},{65432,16},{65433,16},{65434,16},{65435,16},{65436,16},{65437,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {122,7},{2039,11},{65438,16},{65439,16},{65440,16},{65441,16},{65442,16},{65443,16},{65444,16},{65445,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {123,7},{4086,12},{65446,16},{65447,16},{65448,16},{65449,16},{65450,16},{65451,16},{65452,16},{65453,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {250,8},{4087,12},{65454,16},{65455,16},{65456,16},{65457,16},{65458,16},{65459,16},{65460,16},{65461,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {504,9},{32704,15},{65462,16},{65463,16},{65464,16},{65465,16},{65466,16},{65467,16},{65468,16},{65469,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {505,9},{65470,16},{65471,16},{65472,16},{65473,16},{65474,16},{65475,16},{65476,16},{65477,16},{65478,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {506,9},{65479,16},{65480,16},{65481,16},{65482,16},{65483,16},{65484,16},{65485,16},{65486,16},{65487,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {1017,10},{65488,16},{65489,16},{65490,16},{65491,16},{65492,16},{65493,16},{65494,16},{65495,16},{65496,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {1018,10},{65497,16},{65498,16},{65499,16},{65500,16},{65501,16},{65502,16},{65503,16},{65504,16},{65505,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {2040,11},{65506,16},{65507,16},{65508,16},{65509,16},{65510,16},{65511,16},{65512,16},{65513,16},{65514,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {65515,16},{65516,16},{65517,16},{65518,16},{65519,16},{65520,16},{65521,16},{65522,16},{65523,16},{65524,16},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {2041,11},{65525,16},{65526,16},{65527,16},{65528,16},{65529,16},{65530,16},{65531,16},{65532,16},{65533,16},{65534,16},{0,0},{0,0},{0,0},{0,0},{0,0}
+   };
+   static const unsigned short UVAC_HT[256][2] = {
+      {0,2},{1,2},{4,3},{10,4},{24,5},{25,5},{56,6},{120,7},{500,9},{1014,10},{4084,12},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {11,4},{57,6},{246,8},{501,9},{2038,11},{4085,12},{65416,16},{65417,16},{65418,16},{65419,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {26,5},{247,8},{1015,10},{4086,12},{32706,15},{65420,16},{65421,16},{65422,16},{65423,16},{65424,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {27,5},{248,8},{1016,10},{4087,12},{65425,16},{65426,16},{65427,16},{65428,16},{65429,16},{65430,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {58,6},{502,9},{65431,16},{65432,16},{65433,16},{65434,16},{65435,16},{65436,16},{65437,16},{65438,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {59,6},{1017,10},{65439,16},{65440,16},{65441,16},{65442,16},{65443,16},{65444,16},{65445,16},{65446,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {121,7},{2039,11},{65447,16},{65448,16},{65449,16},{65450,16},{65451,16},{65452,16},{65453,16},{65454,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {122,7},{2040,11},{65455,16},{65456,16},{65457,16},{65458,16},{65459,16},{65460,16},{65461,16},{65462,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {249,8},{65463,16},{65464,16},{65465,16},{65466,16},{65467,16},{65468,16},{65469,16},{65470,16},{65471,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {503,9},{65472,16},{65473,16},{65474,16},{65475,16},{65476,16},{65477,16},{65478,16},{65479,16},{65480,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {504,9},{65481,16},{65482,16},{65483,16},{65484,16},{65485,16},{65486,16},{65487,16},{65488,16},{65489,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {505,9},{65490,16},{65491,16},{65492,16},{65493,16},{65494,16},{65495,16},{65496,16},{65497,16},{65498,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {506,9},{65499,16},{65500,16},{65501,16},{65502,16},{65503,16},{65504,16},{65505,16},{65506,16},{65507,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {2041,11},{65508,16},{65509,16},{65510,16},{65511,16},{65512,16},{65513,16},{65514,16},{65515,16},{65516,16},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {16352,14},{65517,16},{65518,16},{65519,16},{65520,16},{65521,16},{65522,16},{65523,16},{65524,16},{65525,16},{0,0},{0,0},{0,0},{0,0},{0,0},
+      {1018,10},{32707,15},{65526,16},{65527,16},{65528,16},{65529,16},{65530,16},{65531,16},{65532,16},{65533,16},{65534,16},{0,0},{0,0},{0,0},{0,0},{0,0}
+   };
+   static const int YQT[] = {16,11,10,16,24,40,51,61,12,12,14,19,26,58,60,55,14,13,16,24,40,57,69,56,14,17,22,29,51,87,80,62,18,22,
+                             37,56,68,109,103,77,24,35,55,64,81,104,113,92,49,64,78,87,103,121,120,101,72,92,95,98,112,100,103,99};
+   static const int UVQT[] = {17,18,24,47,99,99,99,99,18,21,26,66,99,99,99,99,24,26,56,99,99,99,99,99,47,66,99,99,99,99,99,99,
+                              99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99,99};
+   static const float aasf[] = { 1.0f * 2.828427125f, 1.387039845f * 2.828427125f, 1.306562965f * 2.828427125f, 1.175875602f * 2.828427125f,
+                                 1.0f * 2.828427125f, 0.785694958f * 2.828427125f, 0.541196100f * 2.828427125f, 0.275899379f * 2.828427125f };
+
+   int row, col, i, k, subsample;
+   float fdtbl_Y[64], fdtbl_UV[64];
+   unsigned char YTable[64], UVTable[64];
+
+   if(!data || !width || !height || comp > 4 || comp < 1) {
+      return 0;
+   }
+
+   quality = quality ? quality : 90;
+   subsample = quality <= 90 ? 1 : 0;
+   quality = quality < 1 ? 1 : quality > 100 ? 100 : quality;
+   quality = quality < 50 ? 5000 / quality : 200 - quality * 2;
+
+   for(i = 0; i < 64; ++i) {
+      int uvti, yti = (YQT[i]*quality+50)/100;
+      YTable[stbiw__jpg_ZigZag[i]] = (unsigned char) (yti < 1 ? 1 : yti > 255 ? 255 : yti);
+      uvti = (UVQT[i]*quality+50)/100;
+      UVTable[stbiw__jpg_ZigZag[i]] = (unsigned char) (uvti < 1 ? 1 : uvti > 255 ? 255 : uvti);
+   }
+
+   for(row = 0, k = 0; row < 8; ++row) {
+      for(col = 0; col < 8; ++col, ++k) {
+         fdtbl_Y[k] = 1 / (YTable [stbiw__jpg_ZigZag[k]] * aasf[row] * aasf[col]);
+         fdtbl_UV[k] = 1 / (UVTable[stbiw__jpg_ZigZag[k]] * aasf[row] * aasf[col]);
+      }
+   }
+
+
+   {
+      static const unsigned char head0[] = { 0xFF,0xD8,0xFF,0xE0,0,0x10,'J','F','I','F',0,1,1,0,0,1,0,1,0,0,0xFF,0xDB,0,0x84,0 };
+      static const unsigned char head2[] = { 0xFF,0xDA,0,0xC,3,1,0,2,0x11,3,0x11,0,0x3F,0 };
+      const unsigned char head1[] = { 0xFF,0xC0,0,0x11,8,(unsigned char)(height>>8),(unsigned char) ((height) & 0xff),(unsigned char)(width>>8),(unsigned char) ((width) & 0xff),
+                                      3,1,(unsigned char)(subsample?0x22:0x11),0,2,0x11,1,3,0x11,1,0xFF,0xC4,0x01,0xA2,0 };
+      s->func(s->context, (void*)head0, sizeof(head0));
+      s->func(s->context, (void*)YTable, sizeof(YTable));
+      stbiw__putc(s, 1);
+      s->func(s->context, UVTable, sizeof(UVTable));
+      s->func(s->context, (void*)head1, sizeof(head1));
+      s->func(s->context, (void*)(std_dc_luminance_nrcodes+1), sizeof(std_dc_luminance_nrcodes)-1);
+      s->func(s->context, (void*)std_dc_luminance_values, sizeof(std_dc_luminance_values));
+      stbiw__putc(s, 0x10);
+      s->func(s->context, (void*)(std_ac_luminance_nrcodes+1), sizeof(std_ac_luminance_nrcodes)-1);
+      s->func(s->context, (void*)std_ac_luminance_values, sizeof(std_ac_luminance_values));
+      stbiw__putc(s, 1);
+      s->func(s->context, (void*)(std_dc_chrominance_nrcodes+1), sizeof(std_dc_chrominance_nrcodes)-1);
+      s->func(s->context, (void*)std_dc_chrominance_values, sizeof(std_dc_chrominance_values));
+      stbiw__putc(s, 0x11);
+      s->func(s->context, (void*)(std_ac_chrominance_nrcodes+1), sizeof(std_ac_chrominance_nrcodes)-1);
+      s->func(s->context, (void*)std_ac_chrominance_values, sizeof(std_ac_chrominance_values));
+      s->func(s->context, (void*)head2, sizeof(head2));
+   }
+
+
+   {
+      static const unsigned short fillBits[] = {0x7F, 7};
+      int DCY=0, DCU=0, DCV=0;
+      int bitBuf=0, bitCnt=0;
+
+      int ofsG = comp > 2 ? 1 : 0, ofsB = comp > 2 ? 2 : 0;
+      const unsigned char *dataR = (const unsigned char *)data;
+      const unsigned char *dataG = dataR + ofsG;
+      const unsigned char *dataB = dataR + ofsB;
+      int x, y, pos;
+      if(subsample) {
+         for(y = 0; y < height; y += 16) {
+            for(x = 0; x < width; x += 16) {
+               float Y[256], U[256], V[256];
+               for(row = y, pos = 0; row < y+16; ++row) {
+
+                  int clamped_row = (row < height) ? row : height - 1;
+                  int base_p = (stbi__flip_vertically_on_write ? (height-1-clamped_row) : clamped_row)*width*comp;
+                  for(col = x; col < x+16; ++col, ++pos) {
+
+                     int p = base_p + ((col < width) ? col : (width-1))*comp;
+                     float r = dataR[p], g = dataG[p], b = dataB[p];
+                     Y[pos]= +0.29900f*r + 0.58700f*g + 0.11400f*b - 128;
+                     U[pos]= -0.16874f*r - 0.33126f*g + 0.50000f*b;
+                     V[pos]= +0.50000f*r - 0.41869f*g - 0.08131f*b;
+                  }
+               }
+               DCY = stbiw__jpg_processDU(s, &bitBuf, &bitCnt, Y+0, 16, fdtbl_Y, DCY, YDC_HT, YAC_HT);
+               DCY = stbiw__jpg_processDU(s, &bitBuf, &bitCnt, Y+8, 16, fdtbl_Y, DCY, YDC_HT, YAC_HT);
+               DCY = stbiw__jpg_processDU(s, &bitBuf, &bitCnt, Y+128, 16, fdtbl_Y, DCY, YDC_HT, YAC_HT);
+               DCY = stbiw__jpg_processDU(s, &bitBuf, &bitCnt, Y+136, 16, fdtbl_Y, DCY, YDC_HT, YAC_HT);
+
+
+               {
+                  float subU[64], subV[64];
+                  int yy, xx;
+                  for(yy = 0, pos = 0; yy < 8; ++yy) {
+                     for(xx = 0; xx < 8; ++xx, ++pos) {
+                        int j = yy*32+xx*2;
+                        subU[pos] = (U[j+0] + U[j+1] + U[j+16] + U[j+17]) * 0.25f;
+                        subV[pos] = (V[j+0] + V[j+1] + V[j+16] + V[j+17]) * 0.25f;
+                     }
+                  }
+                  DCU = stbiw__jpg_processDU(s, &bitBuf, &bitCnt, subU, 8, fdtbl_UV, DCU, UVDC_HT, UVAC_HT);
+                  DCV = stbiw__jpg_processDU(s, &bitBuf, &bitCnt, subV, 8, fdtbl_UV, DCV, UVDC_HT, UVAC_HT);
+               }
+            }
+         }
+      } else {
+         for(y = 0; y < height; y += 8) {
+            for(x = 0; x < width; x += 8) {
+               float Y[64], U[64], V[64];
+               for(row = y, pos = 0; row < y+8; ++row) {
+
+                  int clamped_row = (row < height) ? row : height - 1;
+                  int base_p = (stbi__flip_vertically_on_write ? (height-1-clamped_row) : clamped_row)*width*comp;
+                  for(col = x; col < x+8; ++col, ++pos) {
+
+                     int p = base_p + ((col < width) ? col : (width-1))*comp;
+                     float r = dataR[p], g = dataG[p], b = dataB[p];
+                     Y[pos]= +0.29900f*r + 0.58700f*g + 0.11400f*b - 128;
+                     U[pos]= -0.16874f*r - 0.33126f*g + 0.50000f*b;
+                     V[pos]= +0.50000f*r - 0.41869f*g - 0.08131f*b;
+                  }
+               }
+
+               DCY = stbiw__jpg_processDU(s, &bitBuf, &bitCnt, Y, 8, fdtbl_Y, DCY, YDC_HT, YAC_HT);
+               DCU = stbiw__jpg_processDU(s, &bitBuf, &bitCnt, U, 8, fdtbl_UV, DCU, UVDC_HT, UVAC_HT);
+               DCV = stbiw__jpg_processDU(s, &bitBuf, &bitCnt, V, 8, fdtbl_UV, DCV, UVDC_HT, UVAC_HT);
+            }
+         }
+      }
+
+
+      stbiw__jpg_writeBits(s, &bitBuf, &bitCnt, fillBits);
+   }
+
+
+   stbiw__putc(s, 0xFF);
+   stbiw__putc(s, 0xD9);
+
+   return 1;
+}
+
+extern "C" int stbi_write_jpg_to_func(stbi_write_func *func, void *context, int x, int y, int comp, const void *data, int quality)
+{
+   stbi__write_context s = { 0 };
+   stbi__start_write_callbacks(&s, func, context);
+   return stbi_write_jpg_core(&s, x, y, comp, (void *) data, quality);
+}
+
+
+
+extern "C" int stbi_write_jpg(char const *filename, int x, int y, int comp, const void *data, int quality)
+{
+   stbi__write_context s = { 0 };
+   if (stbi__start_write_file(&s,filename)) {
+      int r = stbi_write_jpg_core(&s, x, y, comp, data, quality);
+      stbi__end_write_file(&s);
+      return r;
+   } else
+      return 0;
+}
+# 17 "C:/cpp/Tensor/Tensor.cpp" 2
 # 1 "C:/cpp/Tensor/Tensor.h" 1
 # 11 "C:/cpp/Tensor/Tensor.h"
 # 1 "C:/cpp/Tensor/Arena.h" 1
-# 14 "C:/cpp/Tensor/Arena.h"
-
 # 14 "C:/cpp/Tensor/Arena.h"
 class Arena {
 public:
@@ -79903,7 +81706,8 @@ public:
     template<typename... Args>
     const float& get(Args... args) const;
 
-    void print(const std::string& name, bool pretty) const;
+    void print(const std::string& name, bool pretty, int precision) const;
+    void save_as_png(const std::string& filename) const;
 
     size_t numel() const { return numel_; }
     const std::vector<size_t>& shape() const { return shape_; }
@@ -79948,7 +81752,7 @@ const float& Tensor::get(Args... args) const {
     size_t flat = flatten_index(shape_, idx);
     return data_[flat];
 }
-# 16 "C:/cpp/Tensor/Tensor.cpp" 2
+# 18 "C:/cpp/Tensor/Tensor.cpp" 2
 
 Tensor::Tensor() : data_(nullptr), numel_(0), req_grad_(false), grad_(nullptr) {}
 
@@ -80150,9 +81954,9 @@ void Tensor::dropout(const Tensor &in, Tensor &out, float p, bool train) {
 
     for (int i = 0; i < in.numel_; ++i) {
         if ((float)rand() / 
-# 216 "C:/cpp/Tensor/Tensor.cpp" 3
+# 218 "C:/cpp/Tensor/Tensor.cpp" 3
                            0x7fff 
-# 216 "C:/cpp/Tensor/Tensor.cpp"
+# 218 "C:/cpp/Tensor/Tensor.cpp"
                                     < p) {
             out.data_[i] = 0.0f;
         } else {
@@ -80280,7 +82084,7 @@ void Tensor::transpose(Arena &arena, Tensor& out) const {
 }
 
 
-void Tensor::print(const std::string &name, bool pretty) const {
+void Tensor::print(const std::string &name, bool pretty, int precision) const {
     if (!name.empty()) {
         std::cout << name << " = ";
     }
@@ -80300,7 +82104,7 @@ void Tensor::print(const std::string &name, bool pretty) const {
     std::cout << "\n";
 
     std::cout.setf(std::ios::fixed);
-    std::cout << std::setprecision(3);
+    std::cout << std::setprecision(precision);
 
     if (shape_.size() == 1) {
         for (size_t i = 0; i < numel_; ++i) {
@@ -80328,5 +82132,24 @@ void Tensor::print(const std::string &name, bool pretty) const {
     for (size_t i = 0; i < numel_; ++i) {
         std::cout << data_[i] << "\t";
         if ((i + 1) % stride == 0) std::cout << "\n";
+    }
+}
+
+void Tensor::save_as_png(const std::string& filename) const {
+    if (shape_.size() != 2) {
+        throw std::runtime_error("save_as_png wspiera tylko tensory 2D (np. [wysokość, szerokość] dla grayscale).");
+    }
+    size_t height = shape_[0];
+    size_t width = shape_[1];
+
+    std::vector<uint8_t> pixels(numel_);
+    for (size_t i = 0; i < numel_; ++i) {
+        float val = data_[i];
+        val = std::clamp(val, 0.0f, 1.0f);
+        pixels[i] = static_cast<uint8_t>(val * 255.0f + 0.5f);
+    }
+
+    if (stbi_write_png(filename.c_str(), width, height, 1, pixels.data(), width) == 0) {
+        throw std::runtime_error("Błąd zapisu PNG: " + filename);
     }
 }
