@@ -1,43 +1,20 @@
 #include <iostream>
 #include "Tensor.h"
 #include "Arena.h"
+#include "MNIST_loader.h"
 
 int main() {
-    Arena arena(2096);
+    MNIST_loader loader;
 
-    Tensor image(&arena, {28,28});
-    Tensor kernel(&arena, {5,5});
-    Tensor out(&arena, {24,24});
-    Tensor pooled(&arena, {12,12});
-    Tensor normalized(&arena, {12,12});
-    Tensor activated(&arena, {12,12});
-    Tensor dropped(&arena, {12,12});
+    Arena net_arena(2096);
+    Arena data_train(60000*784 + 60000*10);
+    Arena data_test(10000*784 + 10000*10);
 
-    image.random(2, 3);
-    for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 5; j++) {
-            kernel.get(i, j) = (i*i)/16;
-        }
-    }
+    Tensor train_images = loader.load_images(data_train, "../data/trainImages.idx3-ubyte");
+    Tensor train_labels = loader.load_labels(data_train, "../data/trainLabels.idx1-ubyte");
 
-    //image.print("Img", true);
-
-    Tensor::conv2d(arena, image, kernel, 1, out);
-    //out.print("out", true);
-
-    Tensor::maxpool2d(arena, out, 2, PoolingType::MaxPool, pooled);
-    pooled.print("pooled", true);
-
-    Tensor::batch_norm(pooled, normalized, 1, 1);
-    normalized.print("normalized", true);
-
-    normalized.activate(arena, ActivationType::LReLU, activated);
-    activated.print("activated", true);
-
-    Tensor::dropout(pooled, activated, 0.1, true);
-    activated.print("after dropout", true);
-
-    std::cout << "Arena used: " << arena.used() << " / " << arena.capacity() << std::endl;
+    Tensor test_images = loader.load_images(data_test, "../data/testImages.idx3-ubyte");
+    Tensor test_labels = loader.load_labels(data_test, "../data/testLabels.idx1-ubyte");
 
     return 0;
 }

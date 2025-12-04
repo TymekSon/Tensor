@@ -80300,7 +80300,7 @@ void Tensor::print(const std::string &name, bool pretty) const {
     std::cout << "\n";
 
     std::cout.setf(std::ios::fixed);
-    std::cout << std::setprecision(2);
+    std::cout << std::setprecision(3);
 
     if (shape_.size() == 1) {
         for (size_t i = 0; i < numel_; ++i) {

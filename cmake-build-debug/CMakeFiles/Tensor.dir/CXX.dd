@@ -5,3 +5,5 @@ build CMakeFiles/Tensor.dir/Tensor.cpp.obj: dyndep
 
 build CMakeFiles/Tensor.dir/Arena.cpp.obj: dyndep
 
+build CMakeFiles/Tensor.dir/MNIST_loader.cpp.obj: dyndep
+
