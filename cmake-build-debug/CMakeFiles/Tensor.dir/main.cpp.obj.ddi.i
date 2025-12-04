@@ -73907,6 +73907,8 @@ public:
     static void conv2d(Arena &arena, const Tensor &image, const Tensor &kernel, int stride, Tensor& out);
     static void maxpool2d(Arena &arena, const Tensor &image, int kernel_size, PoolingType type, Tensor& out);
 
+    static void batch_norm(const Tensor &in, const Tensor &out, float mean, float stddev);
+
     void transpose(Arena &arena, Tensor& out) const;
     static void matmul(Arena& arena, const Tensor& a, const Tensor& b, Tensor& out);
     static void element_wise(Arena &arena, const Tensor& a, const Tensor& b, Tensor& out);
@@ -73969,17 +73971,21 @@ const float& Tensor::get(Args... args) const {
 # 4 "C:/cpp/Tensor/main.cpp" 2
 
 int main() {
-    Arena arena(1024);
+    Arena arena(2096);
 
 
-    Tensor image(&arena, {9,9});
-    Tensor kernel(&arena, {4,4});
-    Tensor out(&arena, {6,6});
-    Tensor pooled(&arena, {3,3});
-    Tensor activated(&arena, {3,3});
+    Tensor image(&arena, {28,28});
+    Tensor kernel(&arena, {5,5});
+    Tensor out(&arena, {24,24});
+    Tensor pooled(&arena, {12,12});
+    Tensor normalized(&arena, {12,12});
 
-    image.random(0, 1);
-    kernel.fill(2.0f);
+    image.random(2, 3);
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            kernel.get(i, j) = (i*i)/16;
+        }
+    }
 
     image.print("Img", true);
 
@@ -73989,8 +73995,8 @@ int main() {
     Tensor::maxpool2d(arena, out, 2, PoolingType::MaxPool, pooled);
     pooled.print("pooled", true);
 
-    pooled.activate(arena, ActivationType::ReLU, activated);
-    activated.print("activated", true);
+    Tensor::batch_norm(pooled, normalized, 1, 1);
+    normalized.print("normalized", true);
 
     std::cout << "Arena used: " << arena.used() << " / " << arena.capacity() << std::endl;
 

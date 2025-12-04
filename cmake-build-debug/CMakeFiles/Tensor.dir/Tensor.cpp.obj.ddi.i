@@ -79888,6 +79888,8 @@ public:
     static void conv2d(Arena &arena, const Tensor &image, const Tensor &kernel, int stride, Tensor& out);
     static void maxpool2d(Arena &arena, const Tensor &image, int kernel_size, PoolingType type, Tensor& out);
 
+    static void batch_norm(const Tensor &in, const Tensor &out, float mean, float stddev);
+
     void transpose(Arena &arena, Tensor& out) const;
     static void matmul(Arena& arena, const Tensor& a, const Tensor& b, Tensor& out);
     static void element_wise(Arena &arena, const Tensor& a, const Tensor& b, Tensor& out);
@@ -80119,6 +80121,27 @@ void Tensor::maxpool2d(Arena &arena, const Tensor &image, int kernel_size, Pooli
         }
     }
 }
+
+void Tensor::batch_norm(const Tensor &in, const Tensor &out, float beta, float gamma) {
+    float avg = 0.0f;
+    for (size_t i = 0; i < in.numel_; ++i) {
+        avg += in.data_[i];
+    }
+    avg = avg / in.numel_;
+
+    float stddev = 0.0f;
+
+    for (size_t i = 0; i < in.numel_; ++i) {
+        stddev += (in.data_[i] - avg) * (in.data_[i] - avg);
+    }
+    stddev = stddev/in.numel_;
+
+    for (size_t i = 0; i < in.numel_; ++i) {
+        out.data_[i] = (in.data_[i] - avg)/sqrt(stddev+1e-6);
+        out.data_[i] = gamma * out.data_[i] + beta;
+    }
+}
+
 
 void Tensor::activate(Arena &arena, ActivationType type, Tensor& out) const {
     if (out.shape_ != shape_ || out.numel_ != numel_)
