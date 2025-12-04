@@ -5,12 +5,13 @@
 int main() {
     Arena arena(2096);
 
-    // Test conv2d
     Tensor image(&arena, {28,28});
     Tensor kernel(&arena, {5,5});
     Tensor out(&arena, {24,24});
     Tensor pooled(&arena, {12,12});
     Tensor normalized(&arena, {12,12});
+    Tensor activated(&arena, {12,12});
+    Tensor dropped(&arena, {12,12});
 
     image.random(2, 3);
     for (int i = 0; i < 5; i++) {
@@ -19,16 +20,22 @@ int main() {
         }
     }
 
-    image.print("Img", true);
+    //image.print("Img", true);
 
     Tensor::conv2d(arena, image, kernel, 1, out);
-    out.print("out", true);
+    //out.print("out", true);
 
     Tensor::maxpool2d(arena, out, 2, PoolingType::MaxPool, pooled);
     pooled.print("pooled", true);
 
     Tensor::batch_norm(pooled, normalized, 1, 1);
     normalized.print("normalized", true);
+
+    normalized.activate(arena, ActivationType::LReLU, activated);
+    activated.print("activated", true);
+
+    Tensor::dropout(pooled, activated, 0.1, true);
+    activated.print("after dropout", true);
 
     std::cout << "Arena used: " << arena.used() << " / " << arena.capacity() << std::endl;
 

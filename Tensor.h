@@ -45,6 +45,7 @@ public:
     static void maxpool2d(Arena &arena, const Tensor &image, int kernel_size, PoolingType type, Tensor& out);
 
     static void batch_norm(const Tensor &in, const Tensor &out, float mean, float stddev);
+    static void dropout(const Tensor &in, Tensor &out, float p, bool train);
 
     void transpose(Arena &arena, Tensor& out) const;
     static void matmul(Arena& arena, const Tensor& a, const Tensor& b, Tensor& out);

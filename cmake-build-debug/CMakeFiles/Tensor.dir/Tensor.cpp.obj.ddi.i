@@ -79889,6 +79889,7 @@ public:
     static void maxpool2d(Arena &arena, const Tensor &image, int kernel_size, PoolingType type, Tensor& out);
 
     static void batch_norm(const Tensor &in, const Tensor &out, float mean, float stddev);
+    static void dropout(const Tensor &in, Tensor &out, float p, bool train);
 
     void transpose(Arena &arena, Tensor& out) const;
     static void matmul(Arena& arena, const Tensor& a, const Tensor& b, Tensor& out);
@@ -80142,6 +80143,25 @@ void Tensor::batch_norm(const Tensor &in, const Tensor &out, float beta, float g
     }
 }
 
+void Tensor::dropout(const Tensor &in, Tensor &out, float p, bool train) {
+    if (!train) return;
+
+    float scale = 1.0f / (1.0f - p);
+
+    for (int i = 0; i < in.numel_; ++i) {
+        if ((float)rand() / 
+# 216 "C:/cpp/Tensor/Tensor.cpp" 3
+                           0x7fff 
+# 216 "C:/cpp/Tensor/Tensor.cpp"
+                                    < p) {
+            out.data_[i] = 0.0f;
+        } else {
+            out.data_[i] *= scale;
+        }
+    }
+}
+
+
 
 void Tensor::activate(Arena &arena, ActivationType type, Tensor& out) const {
     if (out.shape_ != shape_ || out.numel_ != numel_)
@@ -80283,7 +80303,6 @@ void Tensor::print(const std::string &name, bool pretty) const {
     std::cout << std::setprecision(2);
 
     if (shape_.size() == 1) {
-
         for (size_t i = 0; i < numel_; ++i) {
             std::cout << data_[i];
             if (i + 1 < numel_) std::cout << "\t";
@@ -80293,7 +80312,6 @@ void Tensor::print(const std::string &name, bool pretty) const {
     }
 
     if (shape_.size() == 2) {
-
         size_t H = shape_[0];
         size_t W = shape_[1];
 
@@ -80305,7 +80323,6 @@ void Tensor::print(const std::string &name, bool pretty) const {
         }
         return;
     }
-
 
     size_t stride = shape_.back();
     for (size_t i = 0; i < numel_; ++i) {

@@ -73908,6 +73908,7 @@ public:
     static void maxpool2d(Arena &arena, const Tensor &image, int kernel_size, PoolingType type, Tensor& out);
 
     static void batch_norm(const Tensor &in, const Tensor &out, float mean, float stddev);
+    static void dropout(const Tensor &in, Tensor &out, float p, bool train);
 
     void transpose(Arena &arena, Tensor& out) const;
     static void matmul(Arena& arena, const Tensor& a, const Tensor& b, Tensor& out);
@@ -73973,12 +73974,13 @@ const float& Tensor::get(Args... args) const {
 int main() {
     Arena arena(2096);
 
-
     Tensor image(&arena, {28,28});
     Tensor kernel(&arena, {5,5});
     Tensor out(&arena, {24,24});
     Tensor pooled(&arena, {12,12});
     Tensor normalized(&arena, {12,12});
+    Tensor activated(&arena, {12,12});
+    Tensor dropped(&arena, {12,12});
 
     image.random(2, 3);
     for (int i = 0; i < 5; i++) {
@@ -73987,16 +73989,22 @@ int main() {
         }
     }
 
-    image.print("Img", true);
+
 
     Tensor::conv2d(arena, image, kernel, 1, out);
-    out.print("out", true);
+
 
     Tensor::maxpool2d(arena, out, 2, PoolingType::MaxPool, pooled);
     pooled.print("pooled", true);
 
     Tensor::batch_norm(pooled, normalized, 1, 1);
     normalized.print("normalized", true);
+
+    normalized.activate(arena, ActivationType::LReLU, activated);
+    activated.print("activated", true);
+
+    Tensor::dropout(pooled, activated, 0.1, true);
+    activated.print("after dropout", true);
 
     std::cout << "Arena used: " << arena.used() << " / " << arena.capacity() << std::endl;
 
