@@ -20,9 +20,9 @@ int main() {
     Tensor out(&net_arena, {26, 26});
     Tensor kernel(&net_arena, {3, 3});
 
-    kernel.get(0, 0) = -1; kernel.get(0, 1) = 0; kernel.get(0, 2) = 1;
-    kernel.get(1, 0) = -1; kernel.get(1, 1) = 0; kernel.get(1, 2) = 1;
-    kernel.get(2, 0) = -1; kernel.get(2, 1) = 0; kernel.get(2, 2) = 1;
+    kernel.get(0, 0) = 0; kernel.get(0, 1) = -1; kernel.get(0, 2) = 0;
+    kernel.get(1, 0) = -1; kernel.get(1, 1) = 5; kernel.get(1, 2) = -1;
+    kernel.get(2, 0) = 0; kernel.get(2, 1) = -1; kernel.get(2, 2) = 0;
 
     kernel.print("kernel", true, 2);
 
